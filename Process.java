@@ -1,130 +1,90 @@
-package cpu_scheduling;
+package process;
 
-public class Process {
+import java.util.LinkedList;
+import java.util.Queue;
 
-    private String processName;
-    private int ArrivalTime;
-    private int BurstTime;
-    private int Lower_end;
-    private int Higher_end;
-    private int priorityLevel;
-    private int WaitingTime;
-    private int TurnAroundTime;
-    private int Chartarrival;
+class FCFS {
+
+    private Queue<Process> queue;
+    private int currentTime;
+
+    public FCFS() {
+        queue = new LinkedList<>();
+        currentTime = 0;
+    }
+
+    public void addProcess(Process process) {
+        queue.add(process);
+    }
+
+    public void run() {
+        int totalWaitingTime = 0;
+        int totalTurnaroundTime = 0;
+        int completedProcesses = 0;
+        while (!queue.isEmpty()) {
+            Process process = queue.poll();
+            process.setStartTime(currentTime);
+            int burstTime = process.getBurstTime();
+            for (int i = 0; i < burstTime; i++) {
+                currentTime++;
+                process.setRemainingBurstTime(burstTime - i - 1);
+                displayGanttChart(process, currentTime);
+                displayRemainingBurstTimeTable(process, currentTime);
+            }
+            process.setEndTime(currentTime);
+            totalWaitingTime += (process.getStartTime() - process.getArrivalTime());
+            totalTurnaroundTime += (process.getEndTime() - process.getArrivalTime());
+            completedProcesses++;
+        }
+        double avgWaitingTime = (double) totalWaitingTime / completedProcesses;
+        double avgTurnaroundTime = (double) totalTurnaroundTime / completedProcesses;
+        System.out.println("\nAverage Waiting Time = " + avgWaitingTime);
+        System.out.println("Average Turnaround Time = " + avgTurnaroundTime);
+    }
+
+    private void displayGanttChart(Process currentProcess, int time) {
+        // Display Time
+        System.out.print("Time = " + time + " seconds" + "\t");
+        System.out.println();
+        // Display Gantt Chart
+        System.out.print("| P" + currentProcess.getId() + " ");
+        for (Process process : queue) {
+            System.out.print("| P" + process.getId() + " ");
+        }
+        System.out.print("|");
+        System.out.println();
+    }
+    private void displayRemainingBurstTimeTable(Process currentProcess, int time) {
+        // Display remaining burst time table
+        System.out.print(currentProcess.getRemainingBurstTime() + "\t");
+        for (Process process : queue) {
+            System.out.print(process.getRemainingBurstTime() + "\t");
+        }
+        System.out.println();
+    }
+}
+
+class Process {
+    private int id;
+    private int burstTime;
     private int remainingBurstTime;
-    private boolean completed;
-    private int priority;
-    private int ProcessName;
+    private int arrivalTime;
+    private int startTime;
+    private int endTime;
 
-    private Process(String processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
-        this.processName = processName;
-        this.ArrivalTime = arrivalTime;
-        this.BurstTime = burstTime;
-        this.Lower_end = Lower_end;
-        this.Higher_end = Higher_end;
-        this.priorityLevel = priorityLevel;
-        this.WaitingTime = waitingTime;
-        this.TurnAroundTime = TurnAroundTime;
-        this.Chartarrival = arrivalTime;
+    public Process(int id, int burstTime, int arrivalTime) {
+        this.id = id;
+        this.burstTime = burstTime;
         this.remainingBurstTime = burstTime;
+        this.arrivalTime = arrivalTime;
     }
 
-    public Process(String processName, int arrivalTime, int burstTime, int priorityLevel) {
-        this(processName, arrivalTime, burstTime, 0, 0, priorityLevel, 0, 0);
-    }
-
-    public Process(String processName, int arrivalTime, int burstTime) {
-        this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
-    }
-
-    public Process(int ProcessName, int BurstTime, int ArrivalTime) {
-        this.ProcessName = ProcessName;
-        this.BurstTime = BurstTime;
-        this.ArrivalTime = ArrivalTime;
-        this.WaitingTime = 0;
-        this.TurnAroundTime = 0;
-    }
-
-    public Process(int ProcessName, int BurstTime, int ArrivalTime, int priority) {
-        this.ProcessName = ProcessName;
-        this.BurstTime = BurstTime;
-        this.ArrivalTime = ArrivalTime;
-        this.WaitingTime = 0;
-        this.TurnAroundTime = 0;
-        this.priority = priority;
-
-    }
-
-    public String getProcessName() {
-        return processName;
-    }
-
-    public void setProcessName(String processName) {
-        this.processName = processName;
-    }
-
-    public int getArrivalTime() {
-        return ArrivalTime;
-    }
-
-    public void setArrivalTime(int arrivalTime) {
-        ArrivalTime = arrivalTime;
+    public int getId() {
+        return id;
     }
 
     public int getBurstTime() {
-        return BurstTime;
-    }
-
-    public void setBurstTime(int burstTime) {
-        BurstTime = burstTime;
-    }
-
-    public int getLower_end() {
-        return Lower_end;
-    }
-
-    public void setLower_end(int lower_end) {
-        Lower_end = lower_end;
-    }
-
-    public int getHigher_end() {
-        return Higher_end;
-    }
-
-    public void setHigher_end(int higher_end) {
-        Higher_end = higher_end;
-    }
-
-    public int getPriorityLevel() {
-        return priorityLevel;
-    }
-
-    public void setPriorityLevel(int priorityLevel) {
-        this.priorityLevel = priorityLevel;
-    }
-
-    public int getWaitingTime() {
-        return WaitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        WaitingTime = waitingTime;
-    }
-
-    public int getTurnAroundTime() {
-        return TurnAroundTime;
-    }
-
-    public void setTurnAroundTime(int turnAroundTime) {
-        TurnAroundTime = turnAroundTime;
-    }
-
-    public int getChartarrival() {
-        return Chartarrival;
-    }
-
-    public void setChartarrival(int chartarrival) {
-        Chartarrival = chartarrival;
+        return burstTime;
     }
 
     public int getRemainingBurstTime() {
@@ -135,36 +95,31 @@ public class Process {
         this.remainingBurstTime = remainingBurstTime;
     }
 
-    @Override
-    public String toString() {
-        return "\nProcess{" + "\n\tprocessName=" + processName + "\n\tarrivalTime=" + ArrivalTime
-                + "\n\tburstTime=" + BurstTime + "\n\tstartTime=" + Lower_end
-                + "\n\tfinishTime=" + Higher_end + "\n\tpriorityLevel=" + priorityLevel
-                + "\n\twaitingTime=" + WaitingTime + "\n\tturnaroundTime=" + TurnAroundTime + "\n}";
+    public int getArrivalTime() {
+        return arrivalTime;
     }
 
-    public int get_ProcessName() {
-        return this.ProcessName;
+    public int getStartTime() {
+        return startTime;
     }
 
-    public void set_ProcessName(int ProcessName) {
-        this.ProcessName = ProcessName;
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
     }
 
-    public int getPriority() {
-        return this.priority;
+    public int getEndTime() {
+        return endTime;
     }
 
-    public boolean isCompleted() {
-        return this.completed;
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
     }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    
+    public static void main(String[] args) {
+        FCFS fcfs = new FCFS();
+        fcfs.addProcess(new Process(1, 5, 0));
+        fcfs.addProcess(new Process(2, 3, 1));
+        fcfs.addProcess(new Process(3, 9, 2));
+        fcfs.run();
     }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
 }
