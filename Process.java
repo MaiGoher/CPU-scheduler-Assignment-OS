@@ -1,22 +1,33 @@
-package cpu_scheduling;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.priorityscheduler;
 
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Maiosha
+ */
 public class Process {
 
+    private int ProcessName;
     private String processName;
-    private int ArrivalTime;
+    private int WaitingTime;
     private int BurstTime;
+    private int ArrivalTime;
+    private int TurnAroundTime;
+    private int priority;
+    private int priorityLevel;
     private int Lower_end;
     private int Higher_end;
-    private int priorityLevel;
-    private int WaitingTime;
-    private int TurnAroundTime;
-    private int Chartarrival;
     private int remainingBurstTime;
     private boolean completed;
-    private int priority;
-    private int ProcessName;
-
-    private Process(String processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
+    private int Chartarrival;
+    
+    
+     private Process(String processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
         this.processName = processName;
         this.ArrivalTime = arrivalTime;
         this.BurstTime = burstTime;
@@ -37,6 +48,7 @@ public class Process {
         this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
     }
 
+
     public Process(int ProcessName, int BurstTime, int ArrivalTime) {
         this.ProcessName = ProcessName;
         this.BurstTime = BurstTime;
@@ -45,7 +57,7 @@ public class Process {
         this.TurnAroundTime = 0;
     }
 
-    public Process(int ProcessName, int BurstTime, int ArrivalTime, int priority) {
+    public Process(int ProcessName, int BurstTime, int ArrivalTime,int priority) {
         this.ProcessName = ProcessName;
         this.BurstTime = BurstTime;
         this.ArrivalTime = ArrivalTime;
@@ -55,102 +67,70 @@ public class Process {
 
     }
 
-    public String getProcessName() {
-        return processName;
+    public void set_ProcessName(int ProcessName) {
+        this.ProcessName = ProcessName;
     }
 
-    public void setProcessName(String processName) {
-        this.processName = processName;
+    public void set_WaitingTime(int WaitingTime) {
+        this.WaitingTime = WaitingTime;
     }
 
-    public int getArrivalTime() {
-        return ArrivalTime;
+    public void set_BurstTime(int BurstTime) {
+        this.BurstTime = BurstTime;
     }
 
-    public void setArrivalTime(int arrivalTime) {
-        ArrivalTime = arrivalTime;
+    public void set_ArrivalTime(int ArrivalTime) {
+        this.ArrivalTime = ArrivalTime;
     }
 
-    public int getBurstTime() {
-        return BurstTime;
+    public void set_TurnAroundTime(int TurnAroundTime) {
+        this.TurnAroundTime = TurnAroundTime;
     }
 
-    public void setBurstTime(int burstTime) {
-        BurstTime = burstTime;
+    public void set_LowerEnd(int LowerEnd) {
+        this.Lower_end = LowerEnd;
     }
 
-    public int getLower_end() {
-        return Lower_end;
+    public void set_HigherEnd(int HigherEnd) {
+        this.Higher_end = HigherEnd;
     }
 
-    public void setLower_end(int lower_end) {
-        Lower_end = lower_end;
-    }
-
-    public int getHigher_end() {
-        return Higher_end;
-    }
-
-    public void setHigher_end(int higher_end) {
-        Higher_end = higher_end;
-    }
-
-    public int getPriorityLevel() {
-        return priorityLevel;
-    }
-
-    public void setPriorityLevel(int priorityLevel) {
-        this.priorityLevel = priorityLevel;
-    }
-
-    public int getWaitingTime() {
-        return WaitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        WaitingTime = waitingTime;
-    }
-
-    public int getTurnAroundTime() {
-        return TurnAroundTime;
-    }
-
-    public void setTurnAroundTime(int turnAroundTime) {
-        TurnAroundTime = turnAroundTime;
-    }
-
-    public int getChartarrival() {
-        return Chartarrival;
-    }
-
-    public void setChartarrival(int chartarrival) {
-        Chartarrival = chartarrival;
-    }
-
-    public int getRemainingBurstTime() {
-        return remainingBurstTime;
-    }
-
-    public void setRemainingBurstTime(int remainingBurstTime) {
+    public void set_RemainingBurstTime(int remainingBurstTime) {
         this.remainingBurstTime = remainingBurstTime;
-    }
-
-    @Override
-    public String toString() {
-        return "\nProcess{" + "\n\tprocessName=" + processName + "\n\tarrivalTime=" + ArrivalTime
-                + "\n\tburstTime=" + BurstTime + "\n\tstartTime=" + Lower_end
-                + "\n\tfinishTime=" + Higher_end + "\n\tpriorityLevel=" + priorityLevel
-                + "\n\twaitingTime=" + WaitingTime + "\n\tturnaroundTime=" + TurnAroundTime + "\n}";
     }
 
     public int get_ProcessName() {
         return this.ProcessName;
     }
 
-    public void set_ProcessName(int ProcessName) {
-        this.ProcessName = ProcessName;
+    public int get_WaitingTime() {
+        return this.WaitingTime;
     }
 
+    public int get_BurstTime() {
+        return this.BurstTime;
+    }
+
+    public int get_ArrivalTime() {
+        return this.ArrivalTime;
+    }
+
+    public int get_TurnAroundTime() {
+        return this.TurnAroundTime;
+    }
+
+    public int get_LowerEnd() {
+        return this.Lower_end;
+    }
+
+    public int get_HigherEnd() {
+        return this.Higher_end;
+    }
+
+    public int get_RemainingBurstTime() {
+        return this.remainingBurstTime;
+    }
+    
     public int getPriority() {
         return this.priority;
     }
@@ -162,9 +142,32 @@ public class Process {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
-
+    
     public void setPriority(int priority) {
-        this.priority = priority;
+       this.priority = priority;
+    }
+    
+     public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName;
+    }
+    public int getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(int priorityLevel) {
+        this.priorityLevel = priorityLevel;
+    }
+    
+      public int getChartarrival() {
+        return Chartarrival;
+    }
+
+    public void setChartarrival(int chartarrival) {
+        Chartarrival = chartarrival;
     }
 
 }
