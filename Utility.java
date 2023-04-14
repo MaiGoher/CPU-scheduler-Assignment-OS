@@ -9,9 +9,9 @@ public class Utility {
 
     public static void sortArrival(List<Process> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-            if (((Process) o1).getArrivalTime() == ((Process) o2).getArrivalTime()) {
+            if (((Process) o1).get_ArrivalTime() == ((Process) o2).get_ArrivalTime()) {
                 return 0;
-            } else if (((Process) o1).getArrivalTime() < ((Process) o2).getArrivalTime()) {
+            } else if (((Process) o1).get_ArrivalTime() < ((Process) o2).get_ArrivalTime()) {
                 return -1;
             } else {
                 return 1;
@@ -21,9 +21,9 @@ public class Utility {
 
     public static void sortBrust(List<Process> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-            if (((Process) o1).getBurstTime() == ((Process) o2).getBurstTime()) {
+            if (((Process) o1).get_BurstTime() == ((Process) o2).get_BurstTime()) {
                 return 0;
-            } else if (((Process) o1).getBurstTime() < ((Process) o2).getBurstTime()) {
+            } else if (((Process) o1).get_BurstTime() < ((Process) o2).get_BurstTime()) {
                 return -1;
             } else {
                 return 1;
@@ -71,8 +71,8 @@ public class Utility {
 
     public static void sortName(List<Process> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-            return stringCompare(((Process) o1).getProcessName(), ((Process) o2).getProcessName());
-        }
+                    return stringCompare(((Process) o1).getProcessName(), ((Process) o2).getProcessName());
+                }
         );
     }
 
@@ -80,7 +80,7 @@ public class Utility {
         List<Process> newList = new ArrayList();
 
         for (Process process : oldList) {
-            newList.add(new Process(process.getProcessName(), process.getArrivalTime(), process.getBurstTime(), process.getPriorityLevel()));
+            newList.add(new Process(process.getProcessName(), process.get_ArrivalTime(), process.get_BurstTime(), process.getPriorityLevel()));
         }
 
         return newList;
@@ -89,7 +89,7 @@ public class Utility {
     public static int sumBurst(List<Process> L) {
         int sum = 0;
         for (Process i : L) {
-            sum += i.getBurstTime();
+            sum += i.get_BurstTime();
         }
         return sum;
     }
