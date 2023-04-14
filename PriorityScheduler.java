@@ -4,6 +4,7 @@
 package com.mycompany.priorityscheduler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -106,7 +107,7 @@ public class PriorityScheduler {
             }
         }
     }
-    
+
     public void schedule() {
         int n = processes.size();
         int currentTime = 0;
@@ -193,47 +194,47 @@ public class PriorityScheduler {
     }
 
 
-    
-    private void updateprintGanttChart() {
-  
-    // Print Gantt Chart
-    int i=0;
-    System.out.print("\n");
-    for (int process : timeline) {
-        
-        System.out.print(i +"|" +"p"+process + "|");
-        i+=1;
-    }
-    System.out.print(i);
-    System.out.print("\n");
 
-    try {
-        Thread.sleep(1000); // wait for 1 second
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+    private void updateprintGanttChart() {
+
+        // Print Gantt Chart
+        int i=0;
+        System.out.print("\n");
+        for (int process : timeline) {
+
+            System.out.print(i +"|" +"p"+process + "|");
+            i+=1;
+        }
+        System.out.print(i);
+        System.out.print("\n");
+
+        try {
+            Thread.sleep(1000); // wait for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-}
-    
-     private void displayGanttChart(ArrayList<Process> processes, boolean preemptive) {
+
+    private void displayGanttChart(ArrayList<Process> processes, boolean preemptive) {
         PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
         scheduler.schedule();
-    // Print Gantt Chart
-    int i=0;
-    System.out.print("\n");
-    for (int process : timeline) {
-        
-        System.out.print(i +"|" +"p"+process + "|");
-        i+=1;
-    }
-    System.out.print(i);
-    System.out.print("\n");
+        // Print Gantt Chart
+        int i=0;
+        System.out.print("\n");
+        for (int process : timeline) {
 
-    try {
-        Thread.sleep(1000); // wait for 1 second
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+            System.out.print(i +"[" +"p"+process + "]");
+            i+=1;
+        }
+        System.out.print(i);
+        System.out.print("\n");
+
+        try {
+            Thread.sleep(1000); // wait for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-}
 
 
     public void printRemainingTimeTable() {
@@ -260,6 +261,30 @@ public class PriorityScheduler {
         System.out.printf("Average turnaround time: %.2f\n", totalTurnaroundTime / processes.size());
     }
 
+    public float Average_waiting_time(ArrayList<Process> processes , boolean preemative ){
+        PriorityScheduler scheduler = new PriorityScheduler(processes,preemative);
+        scheduler.schedule();
+        float AWT =0;
+        for(int i =0 ; i<waitingTime.length ;i++){
+
+            AWT += scheduler.waitingTime[i];
+        }
+
+        return AWT/processes.size();
+    }
+
+    public float Average_Turnaround_Time(ArrayList<Process> processes , boolean preemative ){
+        PriorityScheduler scheduler = new PriorityScheduler(processes,preemative);
+        scheduler.schedule();
+        float ATR =0;
+        for(int i =0 ; i<turnaroundTime.length ;i++){
+
+            ATR += scheduler.turnaroundTime[i];
+        }
+
+        return ATR/processes.size();
+    }
+
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Process> processes = new ArrayList<>();
         processes.add(new Process(1, 5, 0, 3));
@@ -268,11 +293,15 @@ public class PriorityScheduler {
         processes.add(new Process(4, 3, 5, 4));
 
         PriorityScheduler scheduler = new PriorityScheduler(processes, true);
-        scheduler.schedule();
+        // scheduler.schedule();
         //scheduler.updateprintGanttChart();
         //scheduler.printRemainingTimeTable();
-        scheduler.printStatistics(processes,true);
-        
+        //scheduler.printStatistics(processes,true);
+//        for(int i=0; i<processes.size();i++ ){
+//            System.out.println(processes.get(i).get_BurstTime());
+//        }
+        System.out.println(scheduler.Average_Turnaround_Time( processes , true ));
+
     }
 
 }
