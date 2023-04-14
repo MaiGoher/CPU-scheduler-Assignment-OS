@@ -1,6 +1,5 @@
 package cpu_scheduling;
 
-
 public class Process {
 
     private String processName;
@@ -13,6 +12,9 @@ public class Process {
     private int TurnAroundTime;
     private int Chartarrival;
     private int remainingBurstTime;
+    private boolean completed;
+    private int priority;
+    private int ProcessName;
 
     private Process(String processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
         this.processName = processName;
@@ -33,6 +35,24 @@ public class Process {
 
     public Process(String processName, int arrivalTime, int burstTime) {
         this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
+    }
+
+    public Process(int ProcessName, int BurstTime, int ArrivalTime) {
+        this.ProcessName = ProcessName;
+        this.BurstTime = BurstTime;
+        this.ArrivalTime = ArrivalTime;
+        this.WaitingTime = 0;
+        this.TurnAroundTime = 0;
+    }
+
+    public Process(int ProcessName, int BurstTime, int ArrivalTime, int priority) {
+        this.ProcessName = ProcessName;
+        this.BurstTime = BurstTime;
+        this.ArrivalTime = ArrivalTime;
+        this.WaitingTime = 0;
+        this.TurnAroundTime = 0;
+        this.priority = priority;
+
     }
 
     public String getProcessName() {
@@ -121,6 +141,30 @@ public class Process {
                 + "\n\tburstTime=" + BurstTime + "\n\tstartTime=" + Lower_end
                 + "\n\tfinishTime=" + Higher_end + "\n\tpriorityLevel=" + priorityLevel
                 + "\n\twaitingTime=" + WaitingTime + "\n\tturnaroundTime=" + TurnAroundTime + "\n}";
+    }
+
+    public int get_ProcessName() {
+        return this.ProcessName;
+    }
+
+    public void set_ProcessName(int ProcessName) {
+        this.ProcessName = ProcessName;
+    }
+
+    public int getPriority() {
+        return this.priority;
+    }
+
+    public boolean isCompleted() {
+        return this.completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
 }
