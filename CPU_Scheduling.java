@@ -25,7 +25,9 @@ public class CPU_Scheduling {
             System.out.println("( " + i + " )  Enter ProcessName, ArrialTime and BurstTime: ");
             list.add(new Process(sc.next(), sc.nextInt(), sc.nextInt()));
         }
-                    System.out.println("Enter Quantum Time: ");
-                    System.out.println(RoundRobin.Calc(list, sc.nextInt()));
-            }
-        }
+        System.out.println("Enter Quantum Time: ");
+        int quantumTime =sc.nextInt();
+        System.out.println(RoundRobin.Calc(list, quantumTime));
+        System.out.println(RoundRobin.generateGanttChart(list,quantumTime));
+    }
+}
