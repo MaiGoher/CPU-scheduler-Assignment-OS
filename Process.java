@@ -1,81 +1,126 @@
+package cpu_scheduling;
 
-/**
- *
- * @author: Maram Ahmed
- */
 
 public class Process {
-    private int ProcessName;
-    private int WaitingTime;
-    private int BurstTime;
+
+    private String processName;
     private int ArrivalTime;
-    private int TurnAroundTime;
+    private int BurstTime;
     private int Lower_end;
     private int Higher_end;
+    private int priorityLevel;
+    private int WaitingTime;
+    private int TurnAroundTime;
+    private int Chartarrival;
     private int remainingBurstTime;
-    private boolean completed;
-    
-    public Process(int ProcessName,int BurstTime,int ArrivalTime)
-    {this.ProcessName=ProcessName;
-    this.BurstTime=BurstTime;
-    this.ArrivalTime=ArrivalTime;
-    this.WaitingTime=0;    //initialize waiting time of new process to 0
-    this.TurnAroundTime=0;   //initialize turn around time of new process to 0
-    this.remainingBurstTime=BurstTime;
-    }
-    
-    public void set_ProcessName(int ProcessName)
-    {this.ProcessName=ProcessName;}
-    
-    public void set_WaitingTime(int WaitingTime)
-    {this.WaitingTime=WaitingTime;}
-    
-    public void set_BurstTime(int BurstTime)
-    {this.BurstTime=BurstTime;}
-    
-    public void set_ArrivalTime(int ArrivalTime)
-    {this.ArrivalTime=ArrivalTime;}
-    
-    public void set_TurnAroundTime(int TurnAroundTime)
-    {this.TurnAroundTime=TurnAroundTime;}
-    
-    public void set_LowerEnd(int LowerEnd)
-    {this.Lower_end=LowerEnd;}
-    
-    public void set_HigherEnd(int HigherEnd)
-    {this.Higher_end=HigherEnd;}
-    
-    public void set_RemainingBurstTime(int remainingBurstTime) 
-    {this.remainingBurstTime = remainingBurstTime;}
-    
-    public int get_ProcessName()
-    {return this.ProcessName;}
-    
-    public int get_WaitingTime()
-    {return this.WaitingTime;}
-    
-    public int get_BurstTime()
-    {return this.BurstTime;}
-    
-    public int get_ArrivalTime()
-    {return this.ArrivalTime;}
-    
-    public int get_TurnAroundTime()
-    {return this.TurnAroundTime;}
-    
-    public int get_LowerEnd()
-    {return this.Lower_end;}
-    
-    public int get_HigherEnd()
-    {return this.Higher_end;}
-    
-    public int get_RemainingBurstTime() 
-    {return remainingBurstTime;}
-    
-    public boolean isCompleted() 
-    {return completed;}
 
-    public void setCompleted(boolean completed)
-    {this.completed = completed;}
-    
+    private Process(String processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
+        this.processName = processName;
+        this.ArrivalTime = arrivalTime;
+        this.BurstTime = burstTime;
+        this.Lower_end = Lower_end;
+        this.Higher_end = Higher_end;
+        this.priorityLevel = priorityLevel;
+        this.WaitingTime = waitingTime;
+        this.TurnAroundTime = TurnAroundTime;
+        this.Chartarrival = arrivalTime;
+        this.remainingBurstTime = burstTime;
+    }
+
+    public Process(String processName, int arrivalTime, int burstTime, int priorityLevel) {
+        this(processName, arrivalTime, burstTime, 0, 0, priorityLevel, 0, 0);
+    }
+
+    public Process(String processName, int arrivalTime, int burstTime) {
+        this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
+    }
+
+    public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName;
+    }
+
+    public int getArrivalTime() {
+        return ArrivalTime;
+    }
+
+    public void setArrivalTime(int arrivalTime) {
+        ArrivalTime = arrivalTime;
+    }
+
+    public int getBurstTime() {
+        return BurstTime;
+    }
+
+    public void setBurstTime(int burstTime) {
+        BurstTime = burstTime;
+    }
+
+    public int getLower_end() {
+        return Lower_end;
+    }
+
+    public void setLower_end(int lower_end) {
+        Lower_end = lower_end;
+    }
+
+    public int getHigher_end() {
+        return Higher_end;
+    }
+
+    public void setHigher_end(int higher_end) {
+        Higher_end = higher_end;
+    }
+
+    public int getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(int priorityLevel) {
+        this.priorityLevel = priorityLevel;
+    }
+
+    public int getWaitingTime() {
+        return WaitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        WaitingTime = waitingTime;
+    }
+
+    public int getTurnAroundTime() {
+        return TurnAroundTime;
+    }
+
+    public void setTurnAroundTime(int turnAroundTime) {
+        TurnAroundTime = turnAroundTime;
+    }
+
+    public int getChartarrival() {
+        return Chartarrival;
+    }
+
+    public void setChartarrival(int chartarrival) {
+        Chartarrival = chartarrival;
+    }
+
+    public int getRemainingBurstTime() {
+        return remainingBurstTime;
+    }
+
+    public void setRemainingBurstTime(int remainingBurstTime) {
+        this.remainingBurstTime = remainingBurstTime;
+    }
+
+    @Override
+    public String toString() {
+        return "\nProcess{" + "\n\tprocessName=" + processName + "\n\tarrivalTime=" + ArrivalTime
+                + "\n\tburstTime=" + BurstTime + "\n\tstartTime=" + Lower_end
+                + "\n\tfinishTime=" + Higher_end + "\n\tpriorityLevel=" + priorityLevel
+                + "\n\twaitingTime=" + WaitingTime + "\n\tturnaroundTime=" + TurnAroundTime + "\n}";
+    }
+
 }
