@@ -13,8 +13,8 @@ public class CPU_Scheduling {
 
     static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        List<Process> list = new ArrayList();
+    public static void main(String[] args) throws InterruptedException {
+        List<Process2> list = new ArrayList();
         System.out.println("Enter number of processes : ");
         int n = sc.nextInt();
         if (n == 0) {
@@ -23,11 +23,13 @@ public class CPU_Scheduling {
         }
         for (int i = 1; i <= n; i++) {
             System.out.println("( " + i + " )  Enter ProcessName, ArrialTime and BurstTime: ");
-            list.add(new Process(sc.next(), sc.nextInt(), sc.nextInt()));
+            list.add(new Process2(sc.next(), sc.nextInt(), sc.nextInt()));
         }
         System.out.println("Enter Quantum Time: ");
         int quantumTime =sc.nextInt();
         System.out.println(RoundRobin.Calc(list, quantumTime));
-        System.out.println(RoundRobin.generateGanttChart(list,quantumTime));
+        //System.out.println(RoundRobin.generateGanttChart(list,quantumTime));
+        //System.out.println(RoundRobin.generateGanttChart_Live(list,quantumTime));
+
     }
 }

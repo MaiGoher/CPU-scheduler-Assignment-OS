@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Utility {
 
-    public static void sortArrival(List<Process> L) {
+    public static void sortArrival(List<Process2> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-            if (((Process) o1).get_ArrivalTime() == ((Process) o2).get_ArrivalTime()) {
+            if (((Process2) o1).getArrivalTime() == ((Process2) o2).getArrivalTime()) {
                 return 0;
-            } else if (((Process) o1).get_ArrivalTime() < ((Process) o2).get_ArrivalTime()) {
+            } else if (((Process2) o1).getArrivalTime() < ((Process2) o2).getArrivalTime()) {
                 return -1;
             } else {
                 return 1;
@@ -19,11 +19,11 @@ public class Utility {
         });
     }
 
-    public static void sortBrust(List<Process> L) {
+    public static void sortBrust(List<Process2> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-            if (((Process) o1).get_BurstTime() == ((Process) o2).get_BurstTime()) {
+            if (((Process2) o1).getBurstTime() == ((Process2) o2).getBurstTime()) {
                 return 0;
-            } else if (((Process) o1).get_BurstTime() < ((Process) o2).get_BurstTime()) {
+            } else if (((Process2) o1).getBurstTime() < ((Process2) o2).getBurstTime()) {
                 return -1;
             } else {
                 return 1;
@@ -69,27 +69,27 @@ public class Utility {
         }
     }
 
-    public static void sortName(List<Process> L) {
+    public static void sortName(List<Process2> L) {
         Collections.sort(L, (Object o1, Object o2) -> {
-                    return stringCompare(((Process) o1).getProcessName(), ((Process) o2).getProcessName());
+                    return stringCompare(((Process2) o1).getProcessName(), ((Process2) o2).getProcessName());
                 }
         );
     }
 
-    public static List<Process> deepCopy(List<Process> oldList) {
-        List<Process> newList = new ArrayList();
+    public static List<Process2> deepCopy(List<Process2> oldList) {
+        List<Process2> newList = new ArrayList();
 
-        for (Process process : oldList) {
-            newList.add(new Process(process.getProcessName(), process.get_ArrivalTime(), process.get_BurstTime(), process.getPriorityLevel()));
+        for (Process2 process2 : oldList) {
+            newList.add(new Process2(process2.getProcessName(), process2.getArrivalTime(), process2.getBurstTime(), process2.getPriorityLevel()));
         }
 
         return newList;
     }
 
-    public static int sumBurst(List<Process> L) {
+    public static int sumBurst(List<Process2> L) {
         int sum = 0;
-        for (Process i : L) {
-            sum += i.get_BurstTime();
+        for (Process2 i : L) {
+            sum += i.getBurstTime();
         }
         return sum;
     }
