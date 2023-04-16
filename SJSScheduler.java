@@ -1,17 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package javafxapplication9;
 /**
  *
  * @author: Maram Ahmed
  */
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class SJSScheduler {
     private List<Process> Processes;
     private List<Integer> WaitingTime = new ArrayList<>();
     private List<Integer> TurnAroundTime=new ArrayList<>();
     private List<String> GanttChart = new ArrayList<>();
+    private List<Integer> ProcessNames=new ArrayList<>();
+    private List<Integer> ChartEnds=new ArrayList<>();
     
     public SJSScheduler(ArrayList<Process> Processes)
     {this.Processes=Processes;}
@@ -35,8 +38,11 @@ public class SJSScheduler {
 
             if (shortestJob != null) {
                 GanttChart.add(" | P"+shortestJob.get_ProcessName());
+                ProcessNames.add(shortestJob.get_ProcessName());
                if(i==0)
                         {shortestJob.set_LowerEnd(0);
+                      //  ChartEnds.add(0);
+                        ChartEnds.add(shortestJob.get_BurstTime());
                         CurrentBT=shortestJob.get_BurstTime();
                         shortestJob.set_HigherEnd(CurrentBT);
                         shortestJob.set_WaitingTime(shortestJob.get_LowerEnd()-shortestJob.get_ArrivalTime());
@@ -46,6 +52,7 @@ public class SJSScheduler {
                         }
                else
                         {shortestJob.set_LowerEnd(CurrentBT);
+                        ChartEnds.add(shortestJob.get_BurstTime());
                         high=shortestJob.get_BurstTime();
                         shortestJob.set_HigherEnd(high+CurrentBT);
                         CurrentBT=high+CurrentBT;
@@ -125,6 +132,19 @@ public class SJSScheduler {
 
     GanttChart.add(" |");
 }
+ 
+    public  ArrayList<Integer> ProcessNames()
+     {System.out.println(ProcessNames);
+      ArrayList<Integer> arrayList = new ArrayList<>(ProcessNames);
+         return arrayList;
+      }
+    
+    public  ArrayList<Integer> ChartEnds()
+     {System.out.println(ChartEnds);
+          ArrayList<Integer> arrayList = new ArrayList<>(ChartEnds);
+         return arrayList;
+      }
+    
     public void PrintGanttChart()
     {   for (int i=0;i<GanttChart.size();i++)
         System.out.print(GanttChart.get(i));
@@ -145,7 +165,7 @@ public class SJSScheduler {
         avg=(double)avg/(TurnAroundTime.size());
         return avg;
     }
- 
+ /*
       public static void main(String[] args) {
         // Create a list of processes
         ArrayList<Process> processes = new ArrayList<>();
@@ -159,8 +179,10 @@ public class SJSScheduler {
         int a3=sc.nextInt();
         Process p = new Process(a1,a2,a3);
         processes.add(p);
-        }
-     /*   Process process1 = new Process(1, 2, 0);
+        }*/
+     public static void main(String[] args) {
+       ArrayList<Process> processes = new ArrayList<>();
+       Process process1 = new Process(1, 2, 0);
         Process process2 = new Process(2, 4, 0);
         Process process3 = new Process(3, 1, 2);
         Process process4 = new Process(4, 3, 2);
@@ -171,16 +193,16 @@ public class SJSScheduler {
         processes.add(process3);
         processes.add(process4);
         processes.add(process5);
-*/
+
         // Schedule processes using SJF Non-preemptive algorithm
         SJSScheduler sjfNonPreemptiveScheduler = new SJSScheduler(processes);
-        sjfNonPreemptiveScheduler.scheduleNonPreemptive_Live();
-        sjfNonPreemptiveScheduler.PrintGanttChart();
+        sjfNonPreemptiveScheduler.scheduleNonPreemptive();
+        sjfNonPreemptiveScheduler.ProcessNames();
+        sjfNonPreemptiveScheduler.ChartEnds();
+       sjfNonPreemptiveScheduler.PrintGanttChart();
         System.out.printf("Average Waiting Time: %.2f\n", sjfNonPreemptiveScheduler.CalcAvgWaitingTime());
         System.out.printf("Average Turn Around Time: %.2f\n", sjfNonPreemptiveScheduler.CalcAvgTurnAroundTime());
-    }
+  //  }
+}
 }
     
-
-    
-

@@ -22,12 +22,21 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 /**
  * FXML Controller class
  *
@@ -36,8 +45,7 @@ import javafx.scene.layout.Pane;
 
 public class FXMLController implements Initializable {
  int i=0;
-    private double xOffset = 0;
-    private double yOffset = 0;
+
     @FXML
     private TextField processName;
     @FXML
@@ -74,9 +82,16 @@ public class FXMLController implements Initializable {
     private TextField noprocessesbtn;
     @FXML
     private Pane myPane;
+    @FXML
+    private Button ganttbtn;
+    @FXML
+    private Button livebtn;
+  
+
 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
          processIDCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("processName"));
          ArrivalTimeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("arrivalTime"));
          BurstTimeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("burstTime"));
@@ -101,8 +116,7 @@ public class FXMLController implements Initializable {
         processName.setDisable(true);
         ArrivalTime.setDisable(true);
         BurstTime.setDisable(true);
-        
-         
+
     }    
     
     private ArrayList<Process> change(ObservableList<Process> input) {
@@ -151,34 +165,51 @@ public class FXMLController implements Initializable {
                       s.schedulePreemptive();
                      AvgWaitingTimeLabel.setText(Double.toString(s.CalcAvgWaitingTime()));
                     AvgTurnaroundTimeLabel.setText(Double.toString(s.CalcAvgTurnAroundTime()));
-                    Label resultLabelps = new Label(s.GanttChart());
-                    myPane.getChildren().add(resultLabelps);
+                   // Label resultLabelps = new Label(s.GanttChart());
+                 //   myPane.getChildren().add(resultLabelps);
+                    Chart ganttChart3 = new Chart(3, 50, 500, 50, myPane);
+                    ganttChart3.divde(s.ChartEnds(),s.ProcessNames(), 0);
+                    myPane.getChildren().add(ganttChart3);
                     
                   
                     break;
                 case "Non Preemptive SFJ":
+
                     SJSScheduler r= new SJSScheduler(change(data));
                     r.scheduleNonPreemptive();
                      AvgWaitingTimeLabel.setText(Double.toString(r.CalcAvgWaitingTime()));
                     AvgTurnaroundTimeLabel.setText(Double.toString(r.CalcAvgTurnAroundTime()));
-                    Label resultLabelnps = new Label(r.GanttChart());
-                    myPane.getChildren().add(resultLabelnps);
+                    //Label resultLabelnps = new Label(r.GanttChart());
+                    //myPane.getChildren().add(resultLabelnps);
+                     Chart ganttChart4 = new Chart(10, 50, 400, 50, myPane);
+                    ganttChart4.divde(r.ChartEnds(),r.ProcessNames(), 0);
+                    myPane.getChildren().add(ganttChart4);
                     break;
                 case "Preemptive Priority":
                    PriorityScheduler p=new PriorityScheduler(change(data) , true);
                    AvgWaitingTimeLabel.setText(Double.toString(p.Average_waiting_time(change(data) , true)));
                     AvgTurnaroundTimeLabel.setText(Double.toString(p.Average_Turnaround_Time(change(data) , true)));
-                   Label resultLabel = new Label(PriorityScheduler.displayGanttChart(change(data) , true).toString());
+                   //Label resultLabel = new Label(PriorityScheduler.displayGanttChart(change(data) , true).toString());
                  //  Label resultLabel = new Label("|p1|p2|");
-                   myPane.getChildren().add(resultLabel);
+                   //myPane.getChildren().add(resultLabel);
+            //        System.out.println("time"+PriorityScheduler.GanttChartparitionstime(change(data), true));
+              //        System.out.println("id"+PriorityScheduler.GanttChartnameID(change(data), true));
+                   Chart ganttChart2 = new Chart(10, 50, 400, 50, myPane);
+                    ganttChart2.divde(PriorityScheduler.GanttChartparitionstime(change(data), true),PriorityScheduler.GanttChartnameID(change(data), true) , 0);
+                     myPane.getChildren().add(ganttChart2);
+                   
 
                     break;
                 case "Non Preemptive priority":
                   PriorityScheduler A=new PriorityScheduler(change(data) , false);
                    AvgWaitingTimeLabel.setText(Double.toString(A.Average_waiting_time(change(data) , false)));
                     AvgTurnaroundTimeLabel.setText(Double.toString(A.Average_Turnaround_Time(change(data) , false)));
-                   Label resultLabe2 = new Label(PriorityScheduler.displayGanttChart(change(data) , false).toString());
-                    myPane.getChildren().add(resultLabe2);
+                   //Label resultLabe2 = new Label(PriorityScheduler.displayGanttChart(change(data) , false).toString());
+                   // myPane.getChildren().add(resultLabe2);
+                    Chart ganttChart = new Chart(10, 50, 400, 50, myPane);
+                    ganttChart.divde(PriorityScheduler.GanttChartparitionstime(change(data), false),PriorityScheduler.GanttChartnameID(change(data), false) , 0);
+                    myPane.getChildren().add(ganttChart);
+
 
                     break;                    
                 case "RR":
@@ -297,6 +328,32 @@ public class FXMLController implements Initializable {
 
 
         
+    }
+
+    @FXML
+    private void btngntt(ActionEvent event) throws IOException {
+        
+       Parent root = FXMLLoader.load(getClass().getResource("ganttchart.fxml"));
+        Stage stage =new Stage();
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        
+        stage.setTitle("Gantt chart");
+        stage.show(); 
+        
+    }
+
+    @FXML
+    private void livee(ActionEvent event) throws IOException {
+        Parent root2 = FXMLLoader.load(getClass().getResource("live.fxml"));
+        Stage stage =new Stage();
+        Scene scene = new Scene(root2);
+        
+        stage.setScene(scene);
+        
+        stage.setTitle("Live Scheduler");
+        stage.show(); 
     }
     
 }

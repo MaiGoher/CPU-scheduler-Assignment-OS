@@ -1,20 +1,24 @@
-/**
- *
- * @author: Maram Ahmed
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package javafxapplication9;
 import java.util.*;
 
-public class SJFS_Preemptive {
+ public class SJFS_Preemptive {
      private List<Process> processes;
       private List<Integer> WaitingTime = new ArrayList<>();
     private List<Integer> TurnAroundTime=new ArrayList<>();
     private List<String> GanttChart = new ArrayList<>();
+    private List<Integer> ProcessNames=new ArrayList<>();
+    private List<Integer> ChartEnds=new ArrayList<>();
+   
 
     public SJFS_Preemptive(ArrayList<Process> processes) {
         this.processes = processes;
     }
 
-    public void schedulePreemptive() {
+     public void schedulePreemptive() {
         // Sort the processes by arrival time to ensure that the process selected is available
         Collections.sort(processes, Comparator.comparingInt(Process::get_ArrivalTime));
 
@@ -26,6 +30,7 @@ public class SJFS_Preemptive {
         Process previous= null;
         Process shortestJob = null;
         int steps=1;
+        int count=0;
         while (completedProcesses < processes.size()) {
            // Process shortestJob = null;
             int minBurstTime = Integer.MAX_VALUE;
@@ -40,28 +45,34 @@ public class SJFS_Preemptive {
             }
             if (shortestJob != null) {
                 if(shortestJob !=previous)
-                {  
+                {   ProcessNames.add(shortestJob.get_ProcessName());
                     GanttChart.add(" |  P"+shortestJob.get_ProcessName());
-                   if(previous==null){shortestJob.set_LowerEnd(0);}
+                   if(previous==null){
+                       shortestJob.set_LowerEnd(0);
+                       //ChartEnds.add(0);
+                   }
                    else { steps=1;}
                 }
                 else 
                 {  
                    steps++;
                 }
-                
                 shortestJob.set_RemainingBurstTime(shortestJob.get_RemainingBurstTime() - 1);
                 currentTime++;
                 
                 if (shortestJob.get_RemainingBurstTime() == 0) {               
                     shortestJob.setCompleted(true);
+                    count++;
                     shortestJob.set_HigherEnd(currentTime);
                     shortestJob.set_LowerEnd(shortestJob.get_HigherEnd()-steps);
+                    if(count==1)
+                    {ChartEnds.add(shortestJob.get_LowerEnd());}
                     shortestJob.set_TurnAroundTime(shortestJob.get_HigherEnd() - shortestJob.get_ArrivalTime());
-               shortestJob.set_WaitingTime(shortestJob.get_HigherEnd()-(shortestJob.get_ArrivalTime()+shortestJob.get_BurstTime()));
-               WaitingTime.add(shortestJob.get_WaitingTime());
-               TurnAroundTime.add(shortestJob.get_TurnAroundTime());
+                    shortestJob.set_WaitingTime(shortestJob.get_HigherEnd()-(shortestJob.get_ArrivalTime()+shortestJob.get_BurstTime()));
+                    WaitingTime.add(shortestJob.get_WaitingTime());
+                    TurnAroundTime.add(shortestJob.get_TurnAroundTime());
                     completedProcesses++;
+                    ChartEnds.add(shortestJob.get_HigherEnd());
              
                 }
             } else {
@@ -71,6 +82,9 @@ public class SJFS_Preemptive {
             }
         }
         GanttChart.add("|");
+        
+        for(int i=ChartEnds.size()-1;i>0;i--)
+        {ChartEnds.set(i, ChartEnds.get(i)-ChartEnds.get(i-1));}
    
     }
     public void schedulePreemptive_Live() {
@@ -96,7 +110,7 @@ public class SJFS_Preemptive {
         }
         if (shortestJob != null) {
             if (shortestJob != previous) {
-                GanttChart.add(" |  P" + shortestJob.get_ProcessName());
+                GanttChart.add(" |  P" + shortestJob.getProcessName());
                 if (previous == null) {
                     shortestJob.set_LowerEnd(0);
                 } else {
@@ -139,7 +153,7 @@ public class SJFS_Preemptive {
             // Print the remaining burst times in a separate line
             System.out.println("Remaining Burst Times:");
             for (Process process : processes) {
-                System.out.println("P" + process.get_ProcessName() + ": " + process.get_RemainingBurstTime());
+                System.out.println("P" + process.getProcessName() + ": " + process.get_RemainingBurstTime());
             }
         } else {
             GanttChart.add("|     ");
@@ -151,9 +165,23 @@ public class SJFS_Preemptive {
 }
      public void PrintGanttChart()
     {   for (int i=0;i<GanttChart.size();i++)
+        
         System.out.print(GanttChart.get(i));
      System.out.println("\n-----------------------------------------------------------");}
+     
+     public String GanttChart()
+     {return GanttChart.toString();}
 
+     public ArrayList<Integer> ProcessNames()
+     {System.out.println(ProcessNames);
+     ArrayList<Integer> arrayList = new ArrayList<>(ProcessNames);
+         return arrayList;
+     }
+     public ArrayList<Integer> ChartEnds()
+     {System.out.println(ChartEnds);
+      ArrayList<Integer> arrayList = new ArrayList<>(ChartEnds);
+         return arrayList;
+      }
     public double CalcAvgWaitingTime()
     { double avg=0;
         for(int i=0;i<WaitingTime.size();i++)
@@ -169,7 +197,9 @@ public class SJFS_Preemptive {
         avg=(double)avg/(TurnAroundTime.size());
         return avg;
     }
+     
     public static void main(String[] args) {
+       /*
         // Create a list of processes
         Scanner sc=new Scanner(System.in);
         ArrayList<Process> processes = new ArrayList<>();
@@ -182,13 +212,24 @@ public class SJFS_Preemptive {
         int a3=sc.nextInt();
         Process p = new Process(a1,a2,a3);
         processes.add(p);
-        }
-     /*   Process process1 = new Process(1, 7, 0);
-        Process process2 = new Process(2, 4, 2);
-        Process process3 = new Process(3, 1, 4);
-        Process process4 = new Process(4, 4, 5);*/
+        }*/
+       ArrayList<Process> processes = new ArrayList<>();
+    /*    Process process1 = new Process(1, 3, 2);
+        Process process2 = new Process(2, 4, 3);
+         processes.add(process1);
+          //System.out.println(processes);
+        processes.add(process2);*/
+         //System.out.println(processes);
+     //   SJFS_Preemptive Scheduler = new SJFS_Preemptive(processes);
+        //Scheduler.schedulePreemptive_Live();
+       // Scheduler.PrintGanttChart();
+    //    System.out.println("CalcAvgTurnAroundTime:"+Double.toString(Scheduler.CalcAvgTurnAroundTime()));
+      //  System.out.println("CalcAvgWaitingTime:"+Double.toString(Scheduler.CalcAvgWaitingTime()));
+                
+       // Process process3 = new Process(3, 1, 4);
+       // Process process4 = new Process(4, 4, 5);
   
- /*   Process process1 = new Process(1, 8, 0);
+        Process process1 = new Process(1, 8, 0);
         Process process2 = new Process(2, 4, 1);
         Process process3 = new Process(3, 9, 2);
         Process process4 = new Process(4, 5, 3);
@@ -196,12 +237,16 @@ public class SJFS_Preemptive {
         processes.add(process1);
         processes.add(process2);
         processes.add(process3);
-        processes.add(process4);*/
+        processes.add(process4);
         SJFS_Preemptive Scheduler = new SJFS_Preemptive(processes);
-      //  Scheduler.schedulePreemptive();
-      Scheduler.schedulePreemptive_Live();
+        Scheduler.schedulePreemptive();
+     // Scheduler.schedulePreemptive_Live();
+     Scheduler.ProcessNames();
+     Scheduler.ChartEnds();
         Scheduler.PrintGanttChart();
-        System.out.printf("Average Waiting Time: %.2f\n", Scheduler.CalcAvgWaitingTime());
-        System.out.printf("Average Turn Around Time: %.2f\n", Scheduler.CalcAvgTurnAroundTime());
-}
-}
+        System.out.println("CalcAvgTurnAroundTime:"+Double.toString(Scheduler.CalcAvgTurnAroundTime()));
+        System.out.println("CalcAvgWaitingTime:"+Double.toString(Scheduler.CalcAvgWaitingTime()));
+   //    System.out.printf("Average Waiting Time: %.2f\n", Scheduler.CalcAvgWaitingTime());
+     //   System.out.printf("Average Turn Around Time: %.2f\n", Scheduler.CalcAvgTurnAroundTime());
+//}
+        }}

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="817.0" prefWidth="913.0" style="-fx-border-width: 0 3 3 3; -fx-background-color: #ffcbd1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication9.LiveController">
+   <children>
+      <BorderPane prefHeight="787.0" prefWidth="959.0" AnchorPane.topAnchor="30.0">
+         <center>
+            <VBox prefHeight="658.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="136.0" prefWidth="1006.0">
+                     <children>
+                        <ImageView fx:id="myimage" disable="true" fitHeight="95.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Desktop/time.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="66.0" prefWidth="95.0" text="     Time:" textFill="#ff0707">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="30.0" prefWidth="110.0" text=" ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER" fillWidth="false" prefHeight="212.0" prefWidth="854.0">
+                     <children>
+                        <TreeTableView fx:id="Table" prefHeight="174.0" prefWidth="655.0" style="-fx-border-color: #000000;">
+                           <columns>
+                              <TreeTableColumn fx:id="processIDCol" prefWidth="230.0" text="Process ID" />
+                              <TreeTableColumn fx:id="ArrivalTimeCol" prefWidth="230.0" text="Waiting Time" />
+                              <TreeTableColumn fx:id="BurstTimeCol" prefWidth="170.39993286132812" text="Turnaround Time" />
+                           </columns>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TreeTableView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="327.0" prefWidth="1006.0" spacing="20.0">
+                     <children>
+                        <HBox prefHeight="158.0" prefWidth="712.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Gantt Chart:" textFill="#ff0101">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="600.0">
+                                 <children>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="869.0">
+                                             <children>
+                                                <Pane fx:id="myPane" prefHeight="200.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="570.0" spacing="5.0">
+                           <children>
+                              <Label text="Average Waiting Time:" textFill="#ff0101">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="AvgWaitingTimeLabel" prefHeight="30.0" prefWidth="480.0" text=" " textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="718.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="208.0" text="Average Turnaround Time: " textFill="RED">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="AvgTurnaroundTimeLabel" prefHeight="30.0" prefWidth="480.0" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
+         <top>
+            <HBox alignment="CENTER" prefHeight="93.0" prefWidth="834.0" style="-fx-background-color: #c30010;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label textFill="WHITE">
+                     <font>
+                        <Font name="Berlin Sans FB" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label text=" Live Scheduler " textFill="WHITE">
+                     <font>
+                        <Font name="Berlin Sans FB" size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

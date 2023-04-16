@@ -1,7 +1,9 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.priorityscheduler;
+package javafxapplication9;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -235,6 +237,60 @@ public class PriorityScheduler {
 
         return ganttChart;
     }
+    
+    
+    
+    
+ 
+    
+public static ArrayList<Integer> GanttChartnameID(ArrayList<Process> processes, boolean preemptive) {
+    PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
+    scheduler.schedule();
+    ArrayList<Integer> nameID = new ArrayList<>();
+    int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
+    for (int process : timeline) {
+        // Check if the process is the same as the previous process, if not, add it to the ArrayList
+        if (process != previousProcess) {
+            nameID.add(process);
+            previousProcess = process;
+        }
+    }
+    return nameID;
+}
+    
+    
+public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> processes, boolean preemptive) {
+    int i = 0;
+    PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
+    scheduler.schedule();
+    ArrayList<Integer> paritionstime = new ArrayList<>();
+    int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
+    for (int process : timeline) {
+        // Check if the process is the same as the previous process
+        if (process == previousProcess) {
+            i += 1; // Increment counter if the process is the same as the previous process
+        } else {
+            // If the process is different from the previous process, reset the counter
+            // and add the counter value to the ArrayList
+            if (previousProcess != -1) {
+                paritionstime.add(i);
+            }
+            i = 1; // Reset counter to 1 for the new process
+            previousProcess = process;
+        }
+    }
+
+    // Add the last counter value to the ArrayList after the loop
+    if (previousProcess != -1) {
+        paritionstime.add(i);
+    }
+
+    return paritionstime;
+}   
+    
+
+    
+    
 
     public void printRemainingTimeTable() {
         System.out.print("\nFinal Remaining Burst Time Table:\n");
@@ -283,7 +339,7 @@ public class PriorityScheduler {
 
         return ATR / processes.size();
     }
-
+/*
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Process> processes = new ArrayList<>();
         processes.add(new Process(1, 5, 0, 3));
@@ -301,6 +357,6 @@ public class PriorityScheduler {
 //        }
         //System.out.println(scheduler.Average_Turnaround_Time(processes, true));
 
-    }
+    }*/
 
 }

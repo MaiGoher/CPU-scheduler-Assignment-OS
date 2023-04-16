@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication9.GanttchartController">
+   <children>
+      <Text fill="RED" layoutX="247.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt Chart">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <AnchorPane fx:id="panee" layoutX="35.0" layoutY="99.0" prefHeight="369.0" prefWidth="606.0" style="-fx-background-color: #9e9e9e;" />
+   </children>
+</AnchorPane>
