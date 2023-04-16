@@ -20,11 +20,15 @@ public class PriorityScheduler {
     private int[] remainingTime;
     private int[] waitingTime;
     private int[] turnaroundTime;
+    private static ArrayList<Integer> RT;
+    private static ArrayList<ArrayList<Integer>> outerList ;
 
     public PriorityScheduler(ArrayList<Process> processes, boolean preemptive) {
         this.processes = processes;
         this.preemptive = preemptive;
         this.timeline = new ArrayList<>();
+        this.RT = new ArrayList<>();
+        this.outerList = new ArrayList<ArrayList<Integer>>();
         this.remainingTime = new int[processes.size()];
         this.waitingTime = new int[processes.size()];
         this.turnaroundTime = new int[processes.size()];
@@ -79,6 +83,7 @@ public class PriorityScheduler {
                         currentTime++;
                         updateRemainingTimeTable();
                         updateprintGanttChart();
+
                         if (remainingTime[minPriorityIndex] == 0) {
                             completed[minPriorityIndex] = true;
                             completedCount++;
@@ -94,8 +99,10 @@ public class PriorityScheduler {
                     }
                 } else {
                     int runTime = processes.get(minPriorityIndex).get_BurstTime();
+
                     for (int i = 0; i < runTime; i++) {
                         timeline.add(processes.get(minPriorityIndex).get_ProcessName());
+
                         remainingTime[minPriorityIndex]--;
                         currentTime++;
                         updateRemainingTimeTable();
@@ -184,35 +191,32 @@ public class PriorityScheduler {
     }
 
     private void updateRemainingTimeTable() {
-        System.out.print("Process\t\tRemaining Burst Time\n");
+        // System.out.print("Process\t\tRemaining Burst Time\n");
         for (int i = 0; i < processes.size(); i++) {
-            System.out.print(processes.get(i).get_ProcessName() + "\t\t" + remainingTime[i] + "\n");
+            // System.out.print(processes.get(i).get_ProcessName() + "\t\t" + remainingTime[i] + "\n");
+            RT.add(remainingTime[i]);
+
         }
-        try {
-            Thread.sleep(1000); // wait for 1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
+
+
+
 
     private void updateprintGanttChart() {
 
         // Print Gantt Chart
         int i = 0;
-        System.out.print("\n");
+        // System.out.print("\n");
         for (int process : timeline) {
 
-            System.out.print(i + "|" + "p" + process + "|");
+            // System.out.print(i + "|" + "p" + process + "|");
             i += 1;
         }
-        System.out.print(i);
-        System.out.print("\n");
+        // System.out.print(i);
+        // System.out.print("\n");
 
-        try {
-            Thread.sleep(1000); // wait for 1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static ArrayList<String> displayGanttChart(ArrayList<Process> processes, boolean preemptive) {
@@ -237,67 +241,80 @@ public class PriorityScheduler {
 
         return ganttChart;
     }
-    
-    
-    
-    
- 
-    
-public static ArrayList<Integer> GanttChartnameID(ArrayList<Process> processes, boolean preemptive) {
-    PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
-    scheduler.schedule();
-    ArrayList<Integer> nameID = new ArrayList<>();
-    int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
-    for (int process : timeline) {
-        // Check if the process is the same as the previous process, if not, add it to the ArrayList
-        if (process != previousProcess) {
-            nameID.add(process);
-            previousProcess = process;
-        }
-    }
-    return nameID;
-}
-    
-    
-public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> processes, boolean preemptive) {
-    int i = 0;
-    PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
-    scheduler.schedule();
-    ArrayList<Integer> paritionstime = new ArrayList<>();
-    int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
-    for (int process : timeline) {
-        // Check if the process is the same as the previous process
-        if (process == previousProcess) {
-            i += 1; // Increment counter if the process is the same as the previous process
-        } else {
-            // If the process is different from the previous process, reset the counter
-            // and add the counter value to the ArrayList
-            if (previousProcess != -1) {
-                paritionstime.add(i);
+
+
+
+
+
+
+    public static ArrayList<Integer> GanttChartnameID(ArrayList<Process> processes, boolean preemptive) {
+        PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
+        scheduler.schedule();
+        ArrayList<Integer> nameID = new ArrayList<>();
+        int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
+        for (int process : timeline) {
+            // Check if the process is the same as the previous process, if not, add it to the ArrayList
+            if (process != previousProcess) {
+                nameID.add(process);
+                previousProcess = process;
             }
-            i = 1; // Reset counter to 1 for the new process
-            previousProcess = process;
         }
+        return nameID;
     }
 
-    // Add the last counter value to the ArrayList after the loop
-    if (previousProcess != -1) {
-        paritionstime.add(i);
+
+    public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> processes, boolean preemptive) {
+        int i = 0;
+        PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
+        scheduler.schedule();
+        ArrayList<Integer> paritionstime = new ArrayList<>();
+        int previousProcess = -1; // Initialize with a value that doesn't exist in the ArrayList
+        for (int process : timeline) {
+            // Check if the process is the same as the previous process
+            if (process == previousProcess) {
+                i += 1; // Increment counter if the process is the same as the previous process
+            } else {
+                // If the process is different from the previous process, reset the counter
+                // and add the counter value to the ArrayList
+                if (previousProcess != -1) {
+                    paritionstime.add(i);
+                }
+                i = 1; // Reset counter to 1 for the new process
+                previousProcess = process;
+            }
+        }
+
+        // Add the last counter value to the ArrayList after the loop
+        if (previousProcess != -1) {
+            paritionstime.add(i);
+        }
+
+        return paritionstime;
     }
 
-    return paritionstime;
-}   
-    
 
-    
-    
+
+
 
     public void printRemainingTimeTable() {
         System.out.print("\nFinal Remaining Burst Time Table:\n");
         System.out.print("Process\t\tRemaining Burst Time\n");
         for (int i = 0; i < processes.size(); i++) {
             System.out.print(processes.get(i).get_ProcessName() + "\t\t" + remainingTime[i] + "\n");
+            RT.add(remainingTime[i]);
         }
+
+    }
+
+    public static ArrayList<Integer> RemainingTime(ArrayList<Process> processes, boolean preemptive) {
+        PriorityScheduler scheduler = new PriorityScheduler(processes, preemptive);
+        for (int i = 0; i < processes.size(); i++) {
+            PriorityScheduler.RT.add(processes.get(i).get_BurstTime());
+        }
+        scheduler.Liveschedule();
+
+        return PriorityScheduler.RT;
+
     }
 
     public void printStatistics(ArrayList<Process> processes, boolean preemptive) {
@@ -339,7 +356,7 @@ public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> proc
 
         return ATR / processes.size();
     }
-/*
+
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Process> processes = new ArrayList<>();
         processes.add(new Process(1, 5, 0, 3));
@@ -348,8 +365,8 @@ public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> proc
         processes.add(new Process(4, 3, 5, 4));
 
         //PriorityScheduler scheduler = new PriorityScheduler(processes, true);
-         //scheduler.schedule();
-       System.out.println(displayGanttChart(processes,true )) ;
+        //scheduler.Liveschedule();
+        System.out.println(RemainingTime( processes,true));
         //scheduler.printRemainingTimeTable();
         //scheduler.printStatistics(processes,true);
 //        for(int i=0; i<processes.size();i++ ){
@@ -357,6 +374,6 @@ public static ArrayList<Integer> GanttChartparitionstime(ArrayList<Process> proc
 //        }
         //System.out.println(scheduler.Average_Turnaround_Time(processes, true));
 
-    }*/
+    }
 
 }
