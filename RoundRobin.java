@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class RoundRobin {
+    private static List<Integer> ProcessNames=new ArrayList<>();
+    private static List<Integer> ChartEnds=new ArrayList<>();
 
     private static List<Process2> filter(List<Process2> process2s, int arrival_time) {
         List<Process2> processes_out = new ArrayList<>();
@@ -136,12 +138,21 @@ public class RoundRobin {
 
                     // Reduce remaining time of this process by quantum
                     if (remainingTime[i] > quantum) {
-                        ganttChart.append(currentTime).append(" |").append(process2s.get(i).getProcessName()).append("| ");
+                        ganttChart.append(currentTime).append(" | P").append(process2s.get(i).getProcessName()).append("| ");
+                        ProcessNames.add(Integer.parseInt(process2s.get(i).getProcessName()));
+                        if (currentTime!=0){
+                            ChartEnds.add(currentTime);
+                        }
+
                         currentTime += quantum;
                         remainingTime[i] -= quantum;
                     } else {
                         // If remaining time is smaller than or equal to quantum, then process is completed
-                        ganttChart.append(currentTime).append(" |").append(process2s.get(i).getProcessName()).append("| ");
+                        ganttChart.append(currentTime).append(" | P").append(process2s.get(i).getProcessName()).append("| ");
+                        ProcessNames.add(Integer.parseInt(process2s.get(i).getProcessName()));
+                        if (currentTime!=0){
+                            ChartEnds.add(currentTime);
+                        }
                         currentTime += remainingTime[i];
                         remainingTime[i] = 0;
                         completed[i] = true;
@@ -154,10 +165,12 @@ public class RoundRobin {
                 break;
         }
         ganttChart.append(currentTime);
-
+        ChartEnds.add(currentTime);
+        for(int i=ChartEnds.size()-1;i>0;i--)
+        {ChartEnds.set(i, ChartEnds.get(i)-ChartEnds.get(i-1));}
         return ganttChart.toString();
     }
-    /*
+
     public static void generateGanttChart_Live(List<Process2> processes, int quantum) {
         int currentTime = 0;
         int remainingTime[] = new int[processes.size()];
@@ -180,6 +193,7 @@ public class RoundRobin {
                     // Reduce remaining time of this process by quantum
                     if (remainingTime[i] > quantum) {
                         ganttChart.append(currentTime).append(" ");
+
                         // Print process name when it enters the execution
                         System.out.println(currentTime + " |" + processes.get(i).getProcessName() + "| Entered");
                         currentTime += quantum;
@@ -210,7 +224,12 @@ public class RoundRobin {
             }
         }
     }
-    */
+    public static List ProcessNames() {
+        return ProcessNames;
+    }
+
+    public static List ChartEnds(){
+        return ChartEnds;
+    }
+
 }
-
-
