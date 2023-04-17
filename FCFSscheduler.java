@@ -40,8 +40,6 @@ class FCFS {
         }
         avgWaitingTime = (double) totalWaitingTime / completedProcesses;
         avgTurnaroundTime = (double) totalTurnaroundTime / completedProcesses;
-        System.out.println("\nAverage Waiting Time = " + avgWaitingTime);
-        System.out.println("Average Turnaround Time = " + avgTurnaroundTime);
     }
 
     private void displayGanttChart(FCFSscheduler currentProcess, int time) {
@@ -72,7 +70,20 @@ class FCFS {
       
         public double getAverageTurnaroundtTime() {
         return avgTurnaroundTime;
-    }  
+    } 
+
+private String ganttChartToString(FCFSscheduler currentProcess, int time) {
+    StringBuilder sb = new StringBuilder();
+    // Display Time
+    sb.append("Time = ").append(time).append(" seconds").append("\t").append(System.lineSeparator());
+    // Display Gantt Chart
+    sb.append("| P").append(currentProcess.getId()).append(" ");
+    for (FCFSscheduler process : queue) {
+        sb.append("| P").append(process.getId()).append(" ");
+    }
+    sb.append("|").append(System.lineSeparator());
+    return sb.toString();
+  }
 }
 
 class FCFSscheduler {
@@ -132,5 +143,7 @@ class FCFSscheduler {
         fcfs.addProcess(new FCFSscheduler(2, 3, 1));
         fcfs.addProcess(new FCFSscheduler(3, 9, 2));
         fcfs.run();
+        System.out.println("Average Waiting Time = " + fcfs.getAverageWaitingTime());
+        System.out.println("Average Turnaround Time = " + fcfs.getAverageTurnaroundtTime());
     }
 }
