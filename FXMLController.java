@@ -119,6 +119,15 @@ public class FXMLController implements Initializable {
 
     }    
     
+        private ArrayList<Process> change2priority(ObservableList<Process> input) {
+        ArrayList<Process> r = new ArrayList<>();
+        input.forEach((j) -> {
+            r.add(new Process(j.get_ProcessName(), j.get_BurstTime(), j.get_ArrivalTime(),j.getPriority()));
+        });
+        return r;
+    }
+    
+    
     private ArrayList<Process> change(ObservableList<Process> input) {
         ArrayList<Process> r = new ArrayList<>();
         input.forEach((j) -> {
@@ -129,7 +138,7 @@ public class FXMLController implements Initializable {
     private List<Process2> change2list(ObservableList<Process> input) {
         List<Process2> r = new ArrayList<>();
         input.forEach((i) -> {
-            r.add(new Process2("p"+i.get_ProcessName(), i.get_ArrivalTime(), i.get_BurstTime()));
+            r.add(new Process2(i.get_ProcessName()+"", i.get_ArrivalTime(), i.get_BurstTime()));
         });
         return r;
     }
@@ -152,67 +161,90 @@ public class FXMLController implements Initializable {
         } else {
             switch (AlgorithmValue) {
                 case "FCFS":
+                    LiveController.nameradiobtn="FCFS";
                      FCFS fcfs = new FCFS();
                      data.forEach((i) -> { fcfs.addProcess(new FCFSscheduler(i.get_ProcessName(), i.get_BurstTime(), i.get_ArrivalTime()));});        
                      fcfs.run();
                      AvgWaitingTimeLabel.setText(Double.toString(fcfs.getAverageWaitingTime()));
                      AvgTurnaroundTimeLabel.setText(Double.toString(fcfs.getAverageTurnaroundtTime()));
+                     LiveController.AvgWaitingTime=Double.toString(fcfs.getAverageWaitingTime());
+                     LiveController.AvgTurnaroundTime=Double.toString(fcfs.getAverageTurnaroundtTime());
+                    // LiveController.chartname=;
+                    //LiveController.charttime=;                         
                   //   Label resultLabelfcfs = new Label();
                   //  myPane.getChildren().add(resultLabelfcfs);
                     break;
                 case "Preemptive SFJ":
+                     LiveController.nameradiobtn="Preemptive SFJ";
                     SJFS_Preemptive s=new SJFS_Preemptive(change(data));
                       s.schedulePreemptive();
                      AvgWaitingTimeLabel.setText(Double.toString(s.CalcAvgWaitingTime()));
                     AvgTurnaroundTimeLabel.setText(Double.toString(s.CalcAvgTurnAroundTime()));
+                      LiveController.AvgWaitingTime=Double.toString(s.CalcAvgWaitingTime());
+                     LiveController.AvgTurnaroundTime=Double.toString(s.CalcAvgTurnAroundTime());
                    // Label resultLabelps = new Label(s.GanttChart());
                  //   myPane.getChildren().add(resultLabelps);
-                    Chart ganttChart3 = new Chart(3, 50, 500, 50, myPane);
+                    Chart ganttChart3 = new Chart(10, 50, 500, 50, myPane);
                     ganttChart3.divde(s.ChartEnds(),s.ProcessNames(), 0);
                     myPane.getChildren().add(ganttChart3);
-                    
+                     LiveController.chartname=s.ProcessNames();
+                    LiveController.charttime=s.ChartEnds();                        
                   
                     break;
                 case "Non Preemptive SFJ":
-
+                    LiveController.nameradiobtn="Non Preemptive SFJ";
                     SJSScheduler r= new SJSScheduler(change(data));
                     r.scheduleNonPreemptive();
                      AvgWaitingTimeLabel.setText(Double.toString(r.CalcAvgWaitingTime()));
                     AvgTurnaroundTimeLabel.setText(Double.toString(r.CalcAvgTurnAroundTime()));
+                     LiveController.AvgWaitingTime=Double.toString(r.CalcAvgWaitingTime());
+                     LiveController.AvgTurnaroundTime=Double.toString(r.CalcAvgTurnAroundTime());
                     //Label resultLabelnps = new Label(r.GanttChart());
                     //myPane.getChildren().add(resultLabelnps);
                      Chart ganttChart4 = new Chart(10, 50, 400, 50, myPane);
                     ganttChart4.divde(r.ChartEnds(),r.ProcessNames(), 0);
                     myPane.getChildren().add(ganttChart4);
+                     LiveController.chartname=r.ProcessNames();
+                    LiveController.charttime=r.ChartEnds();                    
                     break;
                 case "Preemptive Priority":
-                   PriorityScheduler p=new PriorityScheduler(change(data) , true);
-                   AvgWaitingTimeLabel.setText(Double.toString(p.Average_waiting_time(change(data) , true)));
-                    AvgTurnaroundTimeLabel.setText(Double.toString(p.Average_Turnaround_Time(change(data) , true)));
+                    LiveController.nameradiobtn="Preemptive Priority";
+                   PriorityScheduler p=new PriorityScheduler(change2priority(data) , true);
+                  // p.schedule();
+                   AvgWaitingTimeLabel.setText(Double.toString(p.Average_waiting_time(change2priority(data) , true)));
+                    AvgTurnaroundTimeLabel.setText(Double.toString(p.Average_Turnaround_Time(change2priority(data) , true)));
+                   LiveController.AvgWaitingTime=Double.toString(p.Average_waiting_time(change2priority(data) , true));
+                     LiveController.AvgTurnaroundTime=Double.toString(p.Average_Turnaround_Time(change2priority(data) , true));
                    //Label resultLabel = new Label(PriorityScheduler.displayGanttChart(change(data) , true).toString());
                  //  Label resultLabel = new Label("|p1|p2|");
                    //myPane.getChildren().add(resultLabel);
             //        System.out.println("time"+PriorityScheduler.GanttChartparitionstime(change(data), true));
               //        System.out.println("id"+PriorityScheduler.GanttChartnameID(change(data), true));
-                   Chart ganttChart2 = new Chart(10, 50, 400, 50, myPane);
-                    ganttChart2.divde(PriorityScheduler.GanttChartparitionstime(change(data), true),PriorityScheduler.GanttChartnameID(change(data), true) , 0);
+                  Chart ganttChart2 = new Chart(10, 50, 400, 50, myPane);    
+                    ganttChart2.divde(PriorityScheduler.GanttChartparitionstime(change2priority(data), true),PriorityScheduler.GanttChartnameID(change2priority(data), true) , 0);
                      myPane.getChildren().add(ganttChart2);
-                   
-
+                     LiveController.chartname=PriorityScheduler.GanttChartnameID(change2priority(data), true);
+                    LiveController.charttime=PriorityScheduler.GanttChartparitionstime(change2priority(data), true);
                     break;
                 case "Non Preemptive priority":
-                  PriorityScheduler A=new PriorityScheduler(change(data) , false);
-                   AvgWaitingTimeLabel.setText(Double.toString(A.Average_waiting_time(change(data) , false)));
-                    AvgTurnaroundTimeLabel.setText(Double.toString(A.Average_Turnaround_Time(change(data) , false)));
+                      LiveController.nameradiobtn="Non Preemptive priority";
+                  PriorityScheduler A=new PriorityScheduler(change2priority(data) , false);
+                   AvgWaitingTimeLabel.setText(Double.toString(A.Average_waiting_time(change2priority(data) , false)));
+                    AvgTurnaroundTimeLabel.setText(Double.toString(A.Average_Turnaround_Time(change2priority(data) , false)));
+                    LiveController.AvgWaitingTime=Double.toString(A.Average_waiting_time(change2priority(data) , false));
+                     LiveController.AvgTurnaroundTime=Double.toString(A.Average_Turnaround_Time(change2priority(data) , false));
                    //Label resultLabe2 = new Label(PriorityScheduler.displayGanttChart(change(data) , false).toString());
                    // myPane.getChildren().add(resultLabe2);
                     Chart ganttChart = new Chart(10, 50, 400, 50, myPane);
-                    ganttChart.divde(PriorityScheduler.GanttChartparitionstime(change(data), false),PriorityScheduler.GanttChartnameID(change(data), false) , 0);
+                    ganttChart.divde(PriorityScheduler.GanttChartparitionstime(change2priority(data), false),PriorityScheduler.GanttChartnameID(change2priority(data), false) , 0);
                     myPane.getChildren().add(ganttChart);
+                    LiveController.chartname=PriorityScheduler.GanttChartnameID(change2priority(data), false);
+                    LiveController.charttime=PriorityScheduler.GanttChartparitionstime(change2priority(data), false);
 
 
                     break;                    
                 case "RR":
+                     LiveController.nameradiobtn="Round Robin";
                     int q;
                     try {
                         q = Integer.parseInt(QuantumTimeTextField.getText());
@@ -223,8 +255,19 @@ public class FXMLController implements Initializable {
                    
                     AvgWaitingTimeLabel.setText(rr.getAvg_waiting() + "");
                     AvgTurnaroundTimeLabel.setText(rr.getAvg_turnaround() + "");
-                    Label resultLabelRR = new Label(RoundRobin.generateGanttChart(change2list(data), q));
-                    myPane.getChildren().add(resultLabelRR);
+                     LiveController.AvgWaitingTime=rr.getAvg_waiting() + "";
+                     LiveController.AvgTurnaroundTime=rr.getAvg_turnaround() + "";
+                   Chart ganttChartRR = new Chart(10, 50, 400, 50, myPane);
+               
+                  //ganttChartRR.divde( RoundRobin.ChartEnds(change2list(data), q), RoundRobin.ProcessNames(change2list(data), q) , 0);
+                   // myPane.getChildren().add(ganttChartRR);
+                    //Label resultLabelRR = new Label(RoundRobin.generateGanttChart(change2list(data), q));
+                   RoundRobin.generateGanttChart(change2list(data), q);
+                   ganttChartRR.divde( RoundRobin.ChartEnds(),   RoundRobin.ProcessNames() , 0);
+                   LiveController.chartname=RoundRobin.ProcessNames();
+                    LiveController.charttime=RoundRobin.ChartEnds();
+                   myPane.getChildren().add(ganttChartRR);
+               //     myPane.getChildren().add(resultLabelRR);
                     break;
                 default:
                     System.out.println("ERROR");
@@ -239,7 +282,7 @@ public class FXMLController implements Initializable {
           try {
               i++;
               do{
-             
+           //  LiveController.nameidprocess.add(Integer.parseInt(processName.getText()));
        Process r = new  Process(Integer.parseInt(processName.getText()), Integer.parseInt(BurstTime.getText()),Integer.parseInt(ArrivalTime.getText()));
            data.add(r);
             processName.setText("");
@@ -271,7 +314,7 @@ public class FXMLController implements Initializable {
                   if(!priorityTextField.getText().equals(null)){
               i++;}
               do{
-             
+             // LiveController.nameidprocess.add(Integer.parseInt(processName.getText()));
        Process r = new  Process(Integer.parseInt(processName.getText()), Integer.parseInt(BurstTime.getText()),Integer.parseInt(ArrivalTime.getText()),Integer.parseInt(priorityTextField.getText()));
            data.add(r);
             processName.setText("");
