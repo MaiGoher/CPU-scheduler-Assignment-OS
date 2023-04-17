@@ -1,89 +1,74 @@
 package process;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 class FCFS {
 
-    private Queue<FCFSscheduler> queue;
+    private ArrayList<FCFSscheduler> list;
     private int currentTime;
     double avgWaitingTime = 0;
     double avgTurnaroundTime = 0;
 
     public FCFS() {
-        queue = new LinkedList<>();
+        list = new ArrayList<>();
         currentTime = 0;
     }
 
     public void addProcess(FCFSscheduler process) {
-        queue.add(process);
+        list.add(process);
     }
 
     public void run() {
         int totalWaitingTime = 0;
         int totalTurnaroundTime = 0;
         int completedProcesses = 0;
-        while (!queue.isEmpty()) {
-            FCFSscheduler process = queue.poll();
-            process.setStartTime(currentTime);
-            int burstTime = process.getBurstTime();
+        list.sort((p1, p2) -> p1.getArrivalTime() - p2.getArrivalTime()); // sort based on arrival time
+        while (!list.isEmpty()) {
+            FCFSscheduler currentProcess = null;
+            for (FCFSscheduler process : list) {
+                if (process.getArrivalTime() <= currentTime) {
+                    currentProcess = process;
+                    break;
+                }
+            }
+            if (currentProcess == null) {
+                currentTime++;
+                continue;
+            }
+            currentProcess.setStartTime(currentTime);
+            int burstTime = currentProcess.getRemainingBurstTime();
             for (int i = 0; i < burstTime; i++) {
                 currentTime++;
-                process.setRemainingBurstTime(burstTime - i - 1);
-                displayGanttChart(process, currentTime);
-                displayRemainingBurstTimeTable(process, currentTime);
+                currentProcess.setRemainingBurstTime(burstTime - i - 1);
+                printRemainingBurstTimeTable(currentTime);
             }
-            process.setEndTime(currentTime);
-            totalWaitingTime += (process.getStartTime() - process.getArrivalTime());
-            totalTurnaroundTime += (process.getEndTime() - process.getArrivalTime());
+            currentProcess.setEndTime(currentTime);
+            totalWaitingTime += (currentProcess.getStartTime() - currentProcess.getArrivalTime());
+            totalTurnaroundTime += (currentProcess.getEndTime() - currentProcess.getArrivalTime());
             completedProcesses++;
+            list.remove(currentProcess);
         }
         avgWaitingTime = (double) totalWaitingTime / completedProcesses;
         avgTurnaroundTime = (double) totalTurnaroundTime / completedProcesses;
     }
 
-    private void displayGanttChart(FCFSscheduler currentProcess, int time) {
-        // Display Time
-        System.out.print("Time = " + time + " seconds" + "\t");
-        System.out.println();
-        // Display Gantt Chart
-        System.out.print("| P" + currentProcess.getId() + " ");
-        for (FCFSscheduler process : queue) {
-            System.out.print("| P" + process.getId() + " ");
-        }
-        System.out.print("|");
-        System.out.println();
-    }
-    
-    private void displayRemainingBurstTimeTable(FCFSscheduler currentProcess, int time) {
+    private void printRemainingBurstTimeTable(int time) {
         // Display remaining burst time table
-        System.out.print(currentProcess.getRemainingBurstTime() + "\t");
-        for (FCFSscheduler process : queue) {
-            System.out.print(process.getRemainingBurstTime() + "\t");
+        System.out.print("Time = " + time + " seconds\t");
+        for (FCFSscheduler process : list) {
+            System.out.print("| P" + process.getId() + " " + process.getRemainingBurstTime() + " ");
         }
-        System.out.println();
+        System.out.println("|");
     }
-    
-      public double getAverageWaitingTime() {
-        return avgWaitingTime;
-    } 
-      
-        public double getAverageTurnaroundtTime() {
-        return avgTurnaroundTime;
-    } 
 
-private String ganttChartToString(FCFSscheduler currentProcess, int time) {
-    StringBuilder sb = new StringBuilder();
-    // Display Time
-    sb.append("Time = ").append(time).append(" seconds").append("\t").append(System.lineSeparator());
-    // Display Gantt Chart
-    sb.append("| P").append(currentProcess.getId()).append(" ");
-    for (FCFSscheduler process : queue) {
-        sb.append("| P").append(process.getId()).append(" ");
+    public double getAverageWaitingTime() {
+        return avgWaitingTime;
     }
-    sb.append("|").append(System.lineSeparator());
-    return sb.toString();
-  }
+
+    public double getAverageTurnaroundtTime() {
+        return avgTurnaroundTime;
+    }
+
 }
 
 class FCFSscheduler {
@@ -136,11 +121,11 @@ class FCFSscheduler {
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
-    
+
     public static void main(String[] args) {
         FCFS fcfs = new FCFS();
-        fcfs.addProcess(new FCFSscheduler(1, 5, 0));
-        fcfs.addProcess(new FCFSscheduler(2, 3, 1));
+        fcfs.addProcess(new FCFSscheduler(1, 5, 3));
+        fcfs.addProcess(new FCFSscheduler(2, 3, 0));
         fcfs.addProcess(new FCFSscheduler(3, 9, 2));
         fcfs.run();
         System.out.println("Average Waiting Time = " + fcfs.getAverageWaitingTime());
