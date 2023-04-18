@@ -15,3 +15,6 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 | Priority Preemptive                   |
 | Priority Nonpreemptive                |
 | Round Robin                           |
+
+
+![](https://faculty.cc.gatech.edu/~rama/CS2200-External/projects/p4/states.gif)
