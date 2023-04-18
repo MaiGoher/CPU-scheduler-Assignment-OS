@@ -1,4 +1,4 @@
-package process;
+package com.mycompany.priorityscheduler;
 
 import java.util.LinkedList;
 import java.util.Queue;
