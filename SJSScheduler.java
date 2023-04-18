@@ -15,6 +15,7 @@ public class SJSScheduler {
     private List<String> GanttChart = new ArrayList<>();
     private List<Integer> ProcessNames=new ArrayList<>();
     private List<Integer> ChartEnds=new ArrayList<>();
+    private ArrayList<Integer> RemaingBurstTimes=new ArrayList<>();
     
     public SJSScheduler(ArrayList<Process> Processes)
     {this.Processes=Processes;}
@@ -157,7 +158,72 @@ public class SJSScheduler {
         avg=(double)avg/(WaitingTime.size());
         return avg;
     }
-    
+      public void newFunction()
+     { Collections.sort(Processes, Comparator.comparingInt(Process::get_ArrivalTime));
+        int currentTime = 0;
+        int completedProcesses = 0;
+        int in_execution=0;
+        Process shortestJob = null;
+        while (completedProcesses < Processes.size())
+        {    
+            int minBurstTime = Integer.MAX_VALUE;
+            if(in_execution==0)
+            { for (Process process : Processes) {
+             if (process.get_ArrivalTime() <= currentTime && !(process.isCompleted())) {
+                    if (shortestJob == null || process.get_BurstTime() < minBurstTime) {
+                        shortestJob = process;
+                        minBurstTime=process.get_BurstTime();
+                    }  
+          }
+        }}
+          
+           if (shortestJob != null) {
+               GanttChart.add(" |  P" + shortestJob.getProcessName());
+               shortestJob.set_RemainingBurstTime(shortestJob.get_RemainingBurstTime() - 1);
+            currentTime++;
+            if (shortestJob.get_RemainingBurstTime() == 0) {
+                in_execution=0;
+                shortestJob.setCompleted(true);
+                 completedProcesses++;
+            }
+            else{in_execution=1;}
+            /* 
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+*/
+            // Clear the console (optional)
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            System.out.println("Gantt Chart: ");
+            for (String entry : GanttChart) {
+                System.out.print(entry);
+            }
+            System.out.println();
+
+            // Print the remaining burst times in a separate line
+            
+            System.out.println("Remaining Burst Times:");
+            for (Process process : Processes) {
+                RemaingBurstTimes.add(process.get_RemainingBurstTime());
+                System.out.println("P" + process.getProcessName() + ": " + process.get_RemainingBurstTime());
+            }
+            
+           }
+           else
+           { GanttChart.add("|     ");
+            currentTime++;
+        }
+        }
+              GanttChart.add("|");
+   }
+        
+        public ArrayList<Integer> RemainingBurstTimes()
+    {System.out.println(RemaingBurstTimes);
+        return RemaingBurstTimes;
+    }
      public double CalcAvgTurnAroundTime()
     { double avg=0;
         for(int i=0;i<TurnAroundTime.size();i++)
