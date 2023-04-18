@@ -46,7 +46,6 @@ class FCFS {
             for (int i = 0; i < burstTime; i++) {
                 currentTime++;
                 currentProcess.setRemainingBurstTime(burstTime - i - 1);
-                printRemainingBurstTimeTable(currentTime);
 
             }
             currentProcess.setEndTime(currentTime);
@@ -61,14 +60,18 @@ class FCFS {
         avgTurnaroundTime = (double) totalTurnaroundTime / completedProcesses;
     }
 
-    public ArrayList<Integer> printRemainingBurstTimeTable(int time) {
+    public ArrayList<Integer> printRemainingBurstTimeTable(ArrayList<Integer>R) {
         // Display remaining burst time table
-        ArrayList<Integer> RT = new ArrayList<>();
-        System.out.print("Time = " + time + " seconds\t");
-        for (FCFSscheduler process : queue) {
-            RT.add(process.getRemainingBurstTime());
+        ArrayList<Integer> output = new ArrayList<>();
+        for (int i = 0; i < R.size(); i++) {
+            int current = R.get(i);
+            int c =current-1;
+            while (c >= 0) {
+                output.add(c);
+                c--;
+            }
         }
-        return RT;
+        return output;
     }
     private void displayGanttChart(FCFSscheduler currentProcess, int time) {
         // Display Time
@@ -84,14 +87,6 @@ class FCFS {
     }
 
 
-    private void displayRemainingBurstTimeTable(FCFSscheduler currentProcess, int time) {
-        // Display remaining burst time table
-        System.out.print(currentProcess.getRemainingBurstTime() + "\t");
-        for (FCFSscheduler process : queue) {
-            System.out.print(process.getRemainingBurstTime() + "\t");
-        }
-        System.out.println();
-    }
 
     public ArrayList<Integer> ProcessIdGanttChart(ArrayList<FCFSscheduler> queue) {
 
@@ -184,7 +179,10 @@ class FCFSscheduler {
         fcfs.queue.add(new FCFSscheduler(2, 3, 2));
         fcfs.queue.add(new FCFSscheduler(3, 9, 0));
         fcfs.run();
+        ArrayList <Integer> R = fcfs.ProcessTimeGanttChart(fcfs.completedProcessesList);
         System.out.println(fcfs.ProcessIdGanttChart(fcfs.completedProcessesList));
         System.out.println(fcfs.ProcessTimeGanttChart(fcfs.completedProcessesList));
+        System.out.println(fcfs.printRemainingBurstTimeTable(R));
+
     }
 }
