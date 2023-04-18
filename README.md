@@ -2,6 +2,8 @@
 
 This Project was a way to visualize How different CPU scheduling algorithms work, CPU Scheduling is the process of selecting which process will have exclusive use of the CPU, This is to ensure that the CPU is used to its full potential and not idle at any time. The user can input tasks, The tasks are displayed in the Task Queue in the same order as they are put into the program, The program then sorts the tasks based on the algorithm and displays The Gantt chart, and computes Average Waiting Time and Average Turnaround Time. In addition, a  live scheduler is run with each 1 unit of time mapped to 1 second.
 
+## Algorithims
+
 This project Supports any number of processes in simulation. and Support 6 Algorithm:
 
 
