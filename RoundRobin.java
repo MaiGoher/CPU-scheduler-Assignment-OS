@@ -231,5 +231,81 @@ public class RoundRobin {
     public static List ChartEnds(){
         return ChartEnds;
     }
+        public static void RoundRobinLive(List<Process2> Processes, int QuantumTime)
+        { Collections.sort(Processes, Comparator.comparingInt(Process2::getArrivalTime));
+        int currentTime = 0;
+        int completedProcesses = 0;
+        int in_execution=0;
+        int order=0;
+        int i=0;
+        int steps=0;
+        Process2 shortestJob = null;
+        while (completedProcesses < Processes.size())
+        {
+            if(i>Processes.size()-1)
+            {i=0;}
+            if(in_execution==0)
+            {
+                if (Processes.get(i).getArrivalTime() <= currentTime && !Processes.get(i).isCompleted())
+                {shortestJob= Processes.get(i);}
+                else {for(Process2 process:Processes)
+                { if(!process.isCompleted())
+                {shortestJob=process;
+                    break;
+                }
+                }
+                }
+            }
+            if (shortestJob != null) {
+                GanttChart.add(" |  P" + shortestJob.getProcessName());
+                shortestJob.setRemainingBurstTime(shortestJob.getRemainingBurstTime() - 1);
+                steps++;
+                if(steps==QuantumTime)
+                {steps=0;
+                    in_execution=0;}
+                else
+                {in_execution=1;}
+
+                currentTime++;
+                if (shortestJob.getRemainingBurstTime() == 0) {
+                    in_execution=0;
+                    shortestJob.setCompleted(true);
+                    completedProcesses++;
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Clear the console (optional)
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                System.out.println("Gantt Chart: ");
+                for (String entry : GanttChart) {
+                    System.out.print(entry);
+                }
+                System.out.println();
+
+                // Print the remaining burst times in a separate line
+
+                System.out.println("Remaining Burst Times:");
+                for (Process2 process : Processes) {
+                    RemaingBurstTimes.add(process.getRemainingBurstTime());
+                    System.out.println("P" + process.getProcessName() + ": " + process.getRemainingBurstTime());
+
+                }
+
+                i++;
+
+            }
+            else
+            { GanttChart.add("|     ");
+                currentTime++;
+            }
+        }
+        GanttChart.add("|");
+        System.out.println(RemaingBurstTimes);
+    }
 
 }
