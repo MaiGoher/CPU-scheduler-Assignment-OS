@@ -60,18 +60,42 @@ class FCFS {
         avgTurnaroundTime = (double) totalTurnaroundTime / completedProcesses;
     }
 
-    public ArrayList<Integer> printRemainingBurstTimeTable(ArrayList<Integer>R) {
-        // Display remaining burst time table
-        ArrayList<Integer> output = new ArrayList<>();
-        for (int i = 0; i < R.size(); i++) {
-            int current = R.get(i);
-            int c =current-1;
-            while (c >= 0) {
-                output.add(c);
-                c--;
+    public ArrayList<Integer> printRemainingBurstTimeTable(ArrayList<Integer> R) {
+        ArrayList<Integer> remainingTimes = new ArrayList<>();
+        int n = R.size();
+        int[] times = new int[n];
+        for (int i = 0; i < n; i++) {
+            times[i] = R.get(i);
+        }
+        remainingTimes.add(times[0]);
+        int time = 0;
+
+        while (true) {
+            int remaining = 0;
+            for (int i = 0; i < n; i++) {
+                if (times[i] > 0) {
+                    remaining++;
+                    if (i == 0) {
+                        times[i]--;
+                        remainingTimes.add(times[i]);
+                    } else if (remaining == 1) {
+                        times[i]--;
+                        remainingTimes.add(times[i]);
+                    } else {
+                        remainingTimes.add(times[i]);
+                    }
+                } else {
+                    remainingTimes.add(0);
+                }
+            }
+            time++;
+            if (remaining == 0) {
+                break;
             }
         }
-        return output;
+        remainingTimes.remove(0);
+
+        return remainingTimes;
     }
     private void displayGanttChart(FCFSscheduler currentProcess, int time) {
         // Display Time
