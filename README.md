@@ -77,7 +77,6 @@ This project Supports any number of processes in simulation. and Support 6 Algor
     <img src="/images/live.jpg" width="300" />
     <img src="/images/if the user inter non integer value in any textfield.jpg" width="300" />
     <img src="/images/if user enter eny non integer value.jpg" width="300" />
-    priortyNP.jpeg
   </p>
 </div>
 
