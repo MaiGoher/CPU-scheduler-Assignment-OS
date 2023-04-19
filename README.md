@@ -27,6 +27,7 @@ This project Supports any number of processes in simulation. and Support 6 Algor
     <img src="/images/fcfs live.jpg" width="400" />
   </p>
 </div>
+
 ## Priority Preemptive
 
 <div style="border: 3px solid #ddd; padding: 30px;">
