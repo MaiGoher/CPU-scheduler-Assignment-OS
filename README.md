@@ -19,7 +19,7 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ![](https://faculty.cc.gatech.edu/~rama/CS2200-External/projects/p4/states.gif)
 
-### First come first served (FCFS)
+## First come first served (FCFS)
 
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
@@ -28,7 +28,7 @@ This project Supports any number of processes in simulation. and Support 6 Algor
   </p>
 </div>
 
-### Round Robin
+## Round Robin
 
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
