@@ -27,3 +27,12 @@ This project Supports any number of processes in simulation. and Support 6 Algor
     <img src="/images/fcfs live.jpg" width="300" />
   </p>
 </div>
+
+### Round Robin
+
+<div style="border: 3px solid #ddd; padding: 30px;">
+  <p align="center">
+    <img src="/images/RR.jpg" width="300" />
+    <img src="/images/RRlivee.jpg" width="300" />
+  </p>
+</div>
