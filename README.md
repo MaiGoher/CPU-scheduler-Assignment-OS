@@ -5,7 +5,7 @@ This Project was a way to visualize How different CPU scheduling algorithms work
 ## Algorithims
 
 <p align="center">
-  <img src="/images/cpu.jpg" width="500" />
+  <img src="/images/cpu.jpg" width="700" />
 </p>
 
 
