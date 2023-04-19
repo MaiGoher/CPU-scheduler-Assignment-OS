@@ -92,3 +92,11 @@ This project Supports any number of processes in simulation. and Support 6 Algor
     <img src="/images/RRlivee.jpg" width="300" />
   </p>
 </div>
+
+## Authors
+
+- [@esraaAmr](https://github.com/esraaAmr)
+- [@Habibaaahmed](https://github.com/Habibaaahmed)
+- [@MaiGoher](https://github.com/MaiGoher)
+- [@maramahmed74](https://github.com/maramahmed74)
+- [@Carol Botros](https://github.com/Carol-Botros)
