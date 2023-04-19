@@ -21,6 +21,9 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ## First come first served (FCFS)
 
+First come first served is a simple scheduling algorithm used in operating systems, where the process that arrives first is executed first.
+FCFS does not prioritize any task based on its priority, and the tasks are executed in the order in which they arrive.
+
 <div style="border: 1px solid #ddd; padding: 10px;">
   <p align="center">
     <img src="/images/fcfs.jpg" width="300" />
