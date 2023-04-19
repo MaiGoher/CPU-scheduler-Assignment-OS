@@ -30,6 +30,29 @@ This project Supports any number of processes in simulation. and Support 6 Algor
     <img src="/images/fcfs live.jpg" width="300" />
   </p>
 </div>
+## Shortest Job First Preemptive (SJF-P)
+
+- Shortest Job First Preemptive (SJF-P) is a scheduling algorithm used in operating systems, where the process with the shortest expected processing time is executed first.
+- The algorithm can preempt a running process if a new process with a shorter processing time arrives, and the newly arrived process gets executed immediately.
+
+<div style="border: 3px solid #ddd; padding: 30px;">
+  <p align="center">
+    <img src="/images/WhatsApp Image 2023-04-19 at 7.40.46 PM (1).jpeg" width="300" />
+    <img src="/images/sjf live 2.jpeg" width="300" />
+  </p>
+</div>
+
+## Shortest Job First Nonpreemptive (SJF-NP)
+
+- Shortest Job First Nonpreemptive (SJF-NP) is a scheduling algorithm used in operating systems, where the process with the shortest expected processing time is executed first.
+- The algorithm does not preempt a running process, and the running process will continue to execute until it blocks or terminates.
+
+<div style="border: 3px solid #ddd; padding: 30px;">
+  <p align="center">
+    <img src="/images/sfj.jpg" width="300" />
+    <img src="/images/WhatsApp Image 2023-04-19 at 7.43.14 PM.jpeg" width="300" />
+  </p>
+</div>
 
 ## Priority Preemptive
 
