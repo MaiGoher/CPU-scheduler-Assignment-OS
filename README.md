@@ -18,3 +18,10 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 
 ![](https://faculty.cc.gatech.edu/~rama/CS2200-External/projects/p4/states.gif)
+
+### First come first served (FCFS)
+
+<p align="center">
+  <img src="/images/fcfs.jpg" width="400" />
+  <img src="/images/fcfs_live.jpg" width="400" />
+</p>
