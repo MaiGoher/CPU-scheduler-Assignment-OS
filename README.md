@@ -48,7 +48,6 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 - Priority Nonpreemptive is a scheduling algorithm used in operating systems, where the process with the highest priority is executed first.
 - The algorithm does not preempt a running process, and the running process will continue to execute until it blocks or terminates.
-- 
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
     <img src="/images/live.jpg" width="300" />
