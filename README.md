@@ -21,7 +21,7 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ### First come first served (FCFS)
 
-<div style="border: 1px solid #ddd; padding: 10px;">
+<div style="border: 3px solid #ddd; padding: 10px;">
   <p align="center">
     <img src="/images/fcfs.jpg" width="300" />
     <img src="/images/fcfs live.jpg" width="300" />
