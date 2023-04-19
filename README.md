@@ -4,7 +4,9 @@ This Project was a way to visualize How different CPU scheduling algorithms work
 
 ## Algorithims
 
-This project Supports any number of processes in simulation. and Support 6 Algorithm:
+<p align="center">
+  <img src="/images/cpu.jpg" width="500" />
+</p>
 
 
 | Algorithm                             |
