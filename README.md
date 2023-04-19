@@ -21,7 +21,6 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ## First come first served (FCFS)
 
-
 - First come first served is a simple scheduling algorithm used in operating systems, where the process that arrives first is executed first.
 - FCFS does not prioritize any task based on its priority, and the tasks are executed in the order in which they arrive.
 
@@ -34,6 +33,9 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ## Priority Preemptive
 
+- Priority Preemptive is a scheduling algorithm used in operating systems, where the process with the highest priority is executed first.
+- The algorithm can preempt a lower-priority process if a higher-priority process arrives and needs to be executed immediately.
+
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
     <img src="/images/pp.jpg" width="300" />
@@ -44,6 +46,9 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 
 ## Priority Nonpreemptive
 
+- Priority Nonpreemptive is a scheduling algorithm used in operating systems, where the process with the highest priority is executed first.
+- The algorithm does not preempt a running process, and the running process will continue to execute until it blocks or terminates.
+- 
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
     <img src="/images/live.jpg" width="300" />
@@ -53,6 +58,9 @@ This project Supports any number of processes in simulation. and Support 6 Algor
 </div>
 
 ## Round Robin
+
+- Round Robin is a scheduling algorithm used in operating systems, where each process is given a fixed time slice to execute before being preempted to give another process a chance to run.
+- The algorithm ensures that all processes get a fair share of the CPU time, and the time slice is typically small, usually measured in milliseconds.
 
 <div style="border: 3px solid #ddd; padding: 30px;">
   <p align="center">
