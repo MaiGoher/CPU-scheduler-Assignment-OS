@@ -28,6 +28,26 @@ This project Supports any number of processes in simulation. and Support 6 Algor
   </p>
 </div>
 
+## Priority Preemptive
+
+<div style="border: 3px solid #ddd; padding: 30px;">
+  <p align="center">
+    <img src="/images/pp.jpg" width="300" />
+    <img src="/images/RRlivee.jpg" width="300" />
+    <img src="/images/pp add a process.jpg" width="300" />
+  </p>
+</div>
+
+## Priority Nonpreemptive
+
+<div style="border: 3px solid #ddd; padding: 30px;">
+  <p align="center">
+    <img src="/images/live.jpg" width="300" />
+    <img src="/images/if the user inter non integer value in any textfield.jpg" width="300" />
+    <img src="/images/if user enter eny non integer value.jpg" width="300" />
+  </p>
+</div>
+
 ## Round Robin
 
 <div style="border: 3px solid #ddd; padding: 30px;">
