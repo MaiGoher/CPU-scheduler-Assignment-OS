@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class RoundRobin {
-    private static List<Integer> ProcessNames=new ArrayList<>();
-    private static List<Integer> ChartEnds=new ArrayList<>();
+
+    private static List<Integer> ProcessNames = new ArrayList<>();
+    private static List<Integer> ChartEnds = new ArrayList<>();
 
     private static List<Process2> filter(List<Process2> process2s, int arrival_time) {
         List<Process2> processes_out = new ArrayList<>();
@@ -140,7 +141,7 @@ public class RoundRobin {
                     if (remainingTime[i] > quantum) {
                         ganttChart.append(currentTime).append(" | P").append(process2s.get(i).getProcessName()).append("| ");
                         ProcessNames.add(Integer.parseInt(process2s.get(i).getProcessName()));
-                        if (currentTime!=0){
+                        if (currentTime != 0) {
                             ChartEnds.add(currentTime);
                         }
 
@@ -150,7 +151,7 @@ public class RoundRobin {
                         // If remaining time is smaller than or equal to quantum, then process is completed
                         ganttChart.append(currentTime).append(" | P").append(process2s.get(i).getProcessName()).append("| ");
                         ProcessNames.add(Integer.parseInt(process2s.get(i).getProcessName()));
-                        if (currentTime!=0){
+                        if (currentTime != 0) {
                             ChartEnds.add(currentTime);
                         }
                         currentTime += remainingTime[i];
@@ -161,13 +162,15 @@ public class RoundRobin {
             }
 
             // If all process2s are completed, then break the loop
-            if (allCompleted)
+            if (allCompleted) {
                 break;
+            }
         }
         ganttChart.append(currentTime);
         ChartEnds.add(currentTime);
-        for(int i=ChartEnds.size()-1;i>0;i--)
-        {ChartEnds.set(i, ChartEnds.get(i)-ChartEnds.get(i-1));}
+        for (int i = ChartEnds.size() - 1; i > 0; i--) {
+            ChartEnds.set(i, ChartEnds.get(i) - ChartEnds.get(i - 1));
+        }
         return ganttChart.toString();
     }
 
@@ -211,8 +214,9 @@ public class RoundRobin {
             }
 
             // If all processes are completed, then break the loop
-            if (allCompleted)
+            if (allCompleted) {
                 break;
+            }
 
             System.out.println(ganttChart.toString());
 
@@ -224,88 +228,163 @@ public class RoundRobin {
             }
         }
     }
+
     public static List ProcessNames() {
         return ProcessNames;
     }
 
-    public static List ChartEnds(){
+    public static List ChartEnds() {
         return ChartEnds;
     }
-        public static void RoundRobinLive(List<Process2> Processes, int QuantumTime)
-        { Collections.sort(Processes, Comparator.comparingInt(Process2::getArrivalTime));
-        int currentTime = 0;
-        int completedProcesses = 0;
-        int in_execution=0;
-        int order=0;
-        int i=0;
-        int steps=0;
-        Process2 shortestJob = null;
-        while (completedProcesses < Processes.size())
-        {
-            if(i>Processes.size()-1)
-            {i=0;}
-            if(in_execution==0)
-            {
-                if (Processes.get(i).getArrivalTime() <= currentTime && !Processes.get(i).isCompleted())
-                {shortestJob= Processes.get(i);}
-                else {for(Process2 process:Processes)
-                { if(!process.isCompleted())
-                {shortestJob=process;
-                    break;
-                }
-                }
+//        public static void RoundRobinLive(List<Process2> Processes, int QuantumTime)
+//        { Collections.sort(Processes, Comparator.comparingInt(Process2::getArrivalTime));
+//        int currentTime = 0;
+//        int completedProcesses = 0;
+//        int in_execution=0;
+//        int order=0;
+//        int i=0;
+//        int steps=0;
+//        Process2 shortestJob = null;
+//        while (completedProcesses < Processes.size())
+//        {
+//            if(i>Processes.size()-1)
+//            {i=0;}
+//            if(in_execution==0)
+//            {
+//                if (Processes.get(i).getArrivalTime() <= currentTime && !Processes.get(i).isCompleted())
+//                {shortestJob= Processes.get(i);}
+//                else {for(Process2 process:Processes)
+//                { if(!process.isCompleted())
+//                {shortestJob=process;
+//                    break;
+//                }
+//                }
+//                }
+//            }
+//            if (shortestJob != null) {
+//                GanttChart.add(" |  P" + shortestJob.getProcessName());
+//                shortestJob.setRemainingBurstTime(shortestJob.getRemainingBurstTime() - 1);
+//                steps++;
+//                if(steps==QuantumTime)
+//                {steps=0;
+//                    in_execution=0;}
+//                else
+//                {in_execution=1;}
+//
+//                currentTime++;
+//                if (shortestJob.getRemainingBurstTime() == 0) {
+//                    in_execution=0;
+//                    shortestJob.setCompleted(true);
+//                    completedProcesses++;
+//                }
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // Clear the console (optional)
+//                System.out.print("\033[H\033[2J");
+//                System.out.flush();
+//                System.out.println("Gantt Chart: ");
+//                for (String entry : GanttChart) {
+//                    System.out.print(entry);
+//                }
+//                System.out.println();
+//
+//                // Print the remaining burst times in a separate line
+//
+//                System.out.println("Remaining Burst Times:");
+//                for (Process2 process : Processes) {
+//                    RemaingBurstTimes.add(process.getRemainingBurstTime());
+//                    System.out.println("P" + process.getProcessName() + ": " + process.getRemainingBurstTime());
+//
+//                }
+//
+//                i++;
+//
+//            }
+//            else
+//            { GanttChart.add("|     ");
+//                currentTime++;
+//            }
+//        }
+//        GanttChart.add("|");
+//        System.out.println(RemaingBurstTimes);
+//    }
+
+    public static ArrayList<Integer> RemainingTimeLive(ArrayList<Integer> inputArrayList, int quantumTime) {
+        ArrayList<Integer> remainingTime = new ArrayList<Integer>();
+
+        boolean allZero = false;
+
+        while (!allZero) {
+
+            if(!(remainingTime.isEmpty())){
+
+                int numToRemove = inputArrayList.size();
+                System.out.println(inputArrayList.size());
+                int listSize = remainingTime.size();
+                for (int i = 0; i < numToRemove; i++) {
+                    remainingTime.remove(listSize - 1 - i);
                 }
             }
-            if (shortestJob != null) {
-                GanttChart.add(" |  P" + shortestJob.getProcessName());
-                shortestJob.setRemainingBurstTime(shortestJob.getRemainingBurstTime() - 1);
-                steps++;
-                if(steps==QuantumTime)
-                {steps=0;
-                    in_execution=0;}
-                else
-                {in_execution=1;}
+            // iterate through each element in the inputArrayList
+            for (int i = 0; i < inputArrayList.size(); i++) {
+                int timeLeft = inputArrayList.get(i);
 
-                currentTime++;
-                if (shortestJob.getRemainingBurstTime() == 0) {
-                    in_execution=0;
-                    shortestJob.setCompleted(true);
-                    completedProcesses++;
+                // iterate quantumTime times or until element reaches 0
+                for (int j = 0; j < quantumTime; j++) {
+                    // subtract 1 from the element's remaining time
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                    }
+                    inputArrayList.set(i, timeLeft);
+                    for (int n = 0; n < inputArrayList.size(); n++) {
+
+                        if (!allZero) {
+                            remainingTime.add(inputArrayList.get(n));
+                        }
+
+                    }
+                    allZero = inputArrayList.stream().allMatch(element -> element == 0);
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                // Clear the console (optional)
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-                System.out.println("Gantt Chart: ");
-                for (String entry : GanttChart) {
-                    System.out.print(entry);
-                }
-                System.out.println();
-
-                // Print the remaining burst times in a separate line
-
-                System.out.println("Remaining Burst Times:");
-                for (Process2 process : Processes) {
-                    RemaingBurstTimes.add(process.getRemainingBurstTime());
-                    System.out.println("P" + process.getProcessName() + ": " + process.getRemainingBurstTime());
-
-                }
-
-                i++;
 
             }
-            else
-            { GanttChart.add("|     ");
-                currentTime++;
-            }
+
         }
-        GanttChart.add("|");
-        System.out.println(RemaingBurstTimes);
+        return remainingTime;
     }
 
+    public static ArrayList<Integer> Arrange(ArrayList<Process2> p) {
+
+        for (int i = 1; i < p.size(); i++) {
+            Process2 process = p.get(i);
+            int j = i - 1;
+            while (j >= 0 && process.getArrivalTime() < p.get(j).getArrivalTime()) {
+                p.set(j + 1, p.get(j));
+                j--;
+            }
+            p.set(j + 1, process);
+        }
+        ArrayList<Integer> i = new ArrayList<Integer>();
+        for (int n = 0; n < p.size(); n++) {
+            i.add(p.get(n).getBurstTime());
+        }
+
+        return i;
+
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ArrayList<Process2> processes = new ArrayList<>();
+        processes.add(new Process2(1, 4, 0));
+        processes.add(new Process2(2, 3, 2));
+        processes.add(new Process2(3, 2, 3));
+        processes.add(new Process2(4, 1, 5));
+        processes.add(new Process2(5, 6, 1));
+
+        System.out.println(RemainingTimeLive(Arrange(processes), 2));
+
+    }
 }
