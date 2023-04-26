@@ -1,6 +1,13 @@
-package cpu_scheduling;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package javafxapplication9;
 
-
+/**
+ *
+ * @author habib
+ */
 public class Process2 {
 
         private String processName;
@@ -32,10 +39,13 @@ public class Process2 {
 
         public Process2(String processName, int arrivalTime, int burstTime, int priorityLevel) {
             this(processName, arrivalTime, burstTime, 0, 0, priorityLevel, 0, 0);
+            this.remainingBurstTime = burstTime;
+            
         }
 
         public Process2(String processName, int arrivalTime, int burstTime) {
             this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
+             this.remainingBurstTime = burstTime;
         }
 
         public Process2(int ProcessName, int BurstTime, int ArrivalTime) {
@@ -44,6 +54,7 @@ public class Process2 {
             this.ArrivalTime = ArrivalTime;
             this.WaitingTime = 0;
             this.TurnAroundTime = 0;
+            this.remainingBurstTime = BurstTime;
         }
 
         public Process2(int ProcessName, int BurstTime, int ArrivalTime, int priority) {
@@ -53,6 +64,7 @@ public class Process2 {
             this.WaitingTime = 0;
             this.TurnAroundTime = 0;
             this.priority = priority;
+             this.remainingBurstTime = BurstTime;
 
         }
 

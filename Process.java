@@ -24,6 +24,7 @@ public class Process {
     private boolean completed;
     private int priority;
     private int ProcessName;
+    private int RemainingBrustTime;
 /*
     private Process(int processName, int arrivalTime, int burstTime, int Lower_end, int Higher_end, int priorityLevel, int waitingTime, int TurnAroundTime) {
         this.ProcessName = processName;
@@ -46,7 +47,15 @@ public class Process {
     //    this(processName, arrivalTime, burstTime, 0, 0, 0, 0, 0);
    // }
 
+        public Process(int ProcessName, int RemainingBrustTime ) {
+        this.ProcessName = ProcessName;
+     
+        this.RemainingBrustTime=RemainingBrustTime;
+    
+    }
+    
     public Process(int ProcessName, int BurstTime, int ArrivalTime) {
+        
         this.ProcessName = ProcessName;
         this.BurstTime = BurstTime;
         this.ArrivalTime = ArrivalTime;
@@ -64,9 +73,18 @@ public class Process {
         this.priority = priority;
 
     }
+    
+   
+    
 
     public String getProcessName() {
         return "" + ProcessName;
+    }
+        public String getRemainingBrustTime() {
+        return "" + RemainingBrustTime;
+    }
+                public int get_RemainingBrustTime() {
+        return RemainingBrustTime;
     }
 /*
     public void setProcessName(String processName) {
@@ -167,6 +185,9 @@ public class Process {
 
     public int getPriority() {
         return this.priority;
+    }
+        public String get_Priority() {
+        return this.priority+"";
     }
 
     public boolean isCompleted() {

@@ -1,0 +1,13 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 18, 2023, 4:44:36 PM
+    Author     : habib
+*/
+
+.root{
+       -fx-background-image: url("covernew.jpg");
+    -fx-background-size: cover;  
+}

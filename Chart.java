@@ -53,9 +53,10 @@ public class Chart extends Rectangle {
         t0.setStyle("-fx-font-size:15px");
      
         int last = 0; 
+       if(paritions.size()!=1){
         for(int i = 0 ; i<paritions.size()-1 ; ++i){
            double x = (this.x+(split*( paritions.get(i)+last)))  ;
-            
+       
          
          positions.add(x);
             Line l= new Line(x,y,x,y+height);
@@ -83,13 +84,51 @@ public class Chart extends Rectangle {
             
          }
            
+        
+         }else{
+                      double x = (this.x+(split*( paritions.get(0)+last)))  ;
+       
+         
+         positions.add(x);
+            Line l= new Line(x,y,x,y+height);
+            l.setStroke(Color.BLACK);
+           l.setStrokeWidth(1.7);
+             Text labl;
+            
+                      labl = new Text((x/2)-8, y+(2*height/3) ,label.get(0)+"");
+                         labl.setStyle("-fx-font-size:15px;-fx-fill:red;");
+           
+            
+            Text t = new Text(x-7,y+height+20,(start+ paritions.get(0)+last)+"");
+           t.setStyle("-fx-font-size:15px");
+           
+            pane.getChildren().addAll(l , t , labl);
+  
+            //last += paritions.get(0);
+           
+                }
+        
+        
+        
+        if(paritions.size()!=1){
        Text labl = new Text(positions.get(positions.size()-1)+(((super.getWidth()+super.getX())-positions.get(positions.size()-1))/2)-8, y+(2*height/3) ,label.get(label.size()-1)+"");
          labl.setStyle("-fx-font-size:15px;-fx-fill:red;");
         
         Text t2  = new Text(x+width-15 , y+height +20 , (start+last+paritions.get(paritions.size()-1))+""); 
       t2.setStyle("-fx-font-size:15px");
         pane.getChildren().addAll(t0 ,t2,labl);
-      
+       }else
+        {
+       Text labl = new Text(positions.get(positions.size()-1)+(((super.getWidth()+super.getX())-positions.get(positions.size()-1))/2)-8, y+(2*height/3) ,label.get(label.size()-1)+"");
+         labl.setStyle("-fx-font-size:15px;-fx-fill:red;");
+        
+        Text t2  = new Text(x+width-15 , y+height +20 , (start+last+paritions.get(paritions.size()-1))+""); 
+      t2.setStyle("-fx-font-size:15px");
+        pane.getChildren().addAll(t0 );
+        
+        }
+        
+        
     }
     
     
@@ -99,6 +138,8 @@ public class Chart extends Rectangle {
         for(int i = 0 ; i<list.size() ;++i){
             ans.add("P"+(list.get(i) ) ) ;
         }
+                
+           
         return ans ;
     }
     

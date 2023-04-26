@@ -1,4 +1,8 @@
-package cpu_scheduling;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package javafxapplication9;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,20 +81,16 @@ public class RoundRobin {
         int currentTime = 0;
         int remainingTime[] = new int[process2s.size()];
         boolean completed[] = new boolean[process2s.size()];
-
         // Initialize remaining time with burst time of each process
         for (int i = 0; i < process2s.size(); i++) {
             remainingTime[i] = process2s.get(i).getBurstTime();
         }
-
         while (true) {
             boolean allCompleted = true;
-
             // Traverse all process2s one by one repeatedly
             for (int i = 0; i < process2s.size(); i++) {
                 if (remainingTime[i] > 0) {
                     allCompleted = false;
-
                     // Reduce remaining time of this process by quantum
                     if (remainingTime[i] > quantum) {
                         ganttChart.append(currentTime).append(" |").append(process2s.get(i).getProcessName()).append("| ");
@@ -102,21 +102,16 @@ public class RoundRobin {
                         currentTime += remainingTime[i];
                         remainingTime[i] = 0;
                         completed[i] = true;
-
                     }
                 }
-
             }
-
             // If all process2s are completed, then break the loop
             if (allCompleted)
                 break;
         }
         ganttChart.append(currentTime);
-
         return ganttChart.toString();
     }
-
      */
 //    public static String generateGanttChart(List<Process2> process2s, int quantum) {
 //        StringBuilder ganttChart = new StringBuilder();
@@ -314,7 +309,7 @@ public class RoundRobin {
 //        System.out.println(RemaingBurstTimes);
 //    }
 
-    public static ArrayList<Integer> RemainingTimeLive(ArrayList<Integer> inputArrayList, int quantumTime , ArrayList<Process2> p) {
+    public static ArrayList<Integer> RemainingTimeLive(ArrayList<Integer> inputArrayList, int quantumTime , List<Process2> p) {
         ArrayList<Integer> remainingTime = new ArrayList<Integer>();
 
         boolean allZero = false;
@@ -356,12 +351,12 @@ public class RoundRobin {
         return remainingTime;
     }
 
-    public static ArrayList<Integer> ProcessTimeLive(ArrayList<Integer> inputArrayList, int quantumTime , ArrayList<Process2> p) {
+    public static ArrayList<Integer> ProcessTimeLive(ArrayList<Integer> inputArrayList, int quantumTime , List<Process2> p) {
         ArrayList<Integer> remainingTime = new ArrayList<Integer>();
-        ArrayList<Process2> B = ArrangeP(p);
-        ArrayList<Integer> A = new ArrayList<Integer>();
+        List<Process2> B = ArrangeP(p);
+        ArrayList<String> A = new ArrayList<String>();
         for(int i=0 ; i < p.size() ; i++){
-            A.add(B.get(i).get_ProcessName());
+            A.add(B.get(i).getProcessName());
         }
 
 
@@ -381,7 +376,7 @@ public class RoundRobin {
             // iterate through each element in the inputArrayList
             for (int i = 0; i < inputArrayList.size(); i++) {
                 int timeLeft = inputArrayList.get(i);
-                int P_ID = A.get(i);
+                int P_ID = Integer.parseInt(A.get(i));
                 if(inputArrayList.get(i)!=0)  PL.add(P_ID);
                 // iterate quantumTime times or until element reaches 0
                 for (int j = 0; j < quantumTime; j++) {
@@ -409,9 +404,9 @@ public class RoundRobin {
     }
 
 
-    public static ArrayList<Process2> ProcessR(ArrayList<Integer> inputArrayList, int quantumTime , ArrayList<Process2> p) {
+    public static ArrayList<Process2> ProcessR(ArrayList<Integer> inputArrayList, int quantumTime , List<Process2> p) {
         ArrayList<Integer> remainingTime = new ArrayList<Integer>();
-        ArrayList<Process2> B = ArrangeP(p);
+        List<Process2> B = ArrangeP(p);
 
 
 
@@ -461,7 +456,7 @@ public class RoundRobin {
 
 
 
-    public static ArrayList<Process2> ArrangeP(ArrayList<Process2> p) {
+    public static List<Process2> ArrangeP(List<Process2> p) {
 
         for (int i = 1; i < p.size(); i++) {
             Process2 process = p.get(i);
@@ -472,7 +467,7 @@ public class RoundRobin {
             }
             p.set(j + 1, process);
         }
-        ArrayList<Process2> i = p;
+        List<Process2> i = p;
 
 
         return i;
@@ -481,7 +476,7 @@ public class RoundRobin {
 
 
 
-    public static ArrayList<Integer> Arrange(ArrayList<Process2> p) {
+    public static ArrayList<Integer> Arrange(List<Process2> p) {
 
         for (int i = 1; i < p.size(); i++) {
             Process2 process = p.get(i);
@@ -501,8 +496,8 @@ public class RoundRobin {
 
     }
 
-    public static  ArrayList<Integer> paritionstime (ArrayList<Process2> processes, int quantumTime){
-        ArrayList<Process2> A = ProcessR( Arrange(processes), 2,processes);
+    public static  ArrayList<Integer> paritionstime (List<Process2> processes, int quantumTime){
+        ArrayList<Process2> A = ProcessR( Arrange(processes), quantumTime,processes);
         ArrayList<Integer> result = new ArrayList<>();
 
         for(int j =0 ; j< A.size();j++){
@@ -533,11 +528,11 @@ public class RoundRobin {
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Process2> processes = new ArrayList<>();
-        processes.add(new Process2(1, 4, 0));
-        processes.add(new Process2(2, 3, 2));
-        processes.add(new Process2(3, 2, 3));
-        processes.add(new Process2(4, 1, 5));
-        processes.add(new Process2(5, 6, 1));
+        processes.add(new Process2("1", 4, 0));
+        processes.add(new Process2("2", 3, 2));
+        processes.add(new Process2("3", 2, 3));
+        processes.add(new Process2("4", 1, 5));
+        processes.add(new Process2("5", 6, 1));
 
         System.out.println(RemainingTimeLive(Arrange(processes), 2,processes ));
         System.out.println(ProcessTimeLive( Arrange(processes), 2,processes));

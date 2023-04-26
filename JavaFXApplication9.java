@@ -29,6 +29,7 @@ public class JavaFXApplication9 extends Application {
             stage.setTitle("CPU Scheduler Simulator");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("ICON.jpg")));
             stage.show();
+            
         } catch (IOException e) {
             System.out.println("Exception in GUIMain -> Start Method:-" + e);
             System.exit(0);

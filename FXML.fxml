@@ -10,6 +10,10 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="903.0" prefWidth="1005.0" style="-fx-background-color: #14212A; -fx-border-width: 0 3 3 3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication9.FXMLController">
+<AnchorPane id="AnchorPane" fx:id="anchorpanee" prefHeight="903.0" prefWidth="1005.0" style="-fx-border-width: 0 3 3 3;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication9.FXMLController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <center>
@@ -71,14 +75,44 @@
                                     <TextField fx:id="BurstTime" prefHeight="26.0" prefWidth="166.0" promptText="Brust Time" />
                                  </children>
                               </VBox>
+                              <VBox alignment="CENTER" prefHeight="51.0" prefWidth="79.0">
+                                 <children>
+                                    <Label prefHeight="19.0" prefWidth="74.0" text="Priority" textFill="WHITE">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="priorityTextField" onAction="#ComputeAction" prefHeight="31.0" prefWidth="116.0" promptText="priority" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="51.0" prefWidth="106.0" spacing="5.0">
+                                 <children>
+                                    <Label prefHeight="19.0" prefWidth="130.0" text="Quantum Time" textFill="WHITE">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="QuantumTimeTextField" onAction="#ComputeAction" prefHeight="31.0" prefWidth="116.0" promptText="Quantum Time" />
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="945.0">
                            <children>
-                              <Button fx:id="addbtn" mnemonicParsing="false" onAction="#AddProcessAction" prefHeight="31.0" prefWidth="218.0" style="-fx-background-color: #203747;" text="ADD" textFill="WHITE">
+                              <Button fx:id="addbtn" mnemonicParsing="false" onAction="#AddProcessAction" prefHeight="31.0" prefWidth="218.0" style="-fx-background-color: #240032;" text="ADD" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
+                                 <effect>
+                                    <Lighting diffuseConstant="1.76" specularConstant="1.68" specularExponent="40.0" surfaceScale="0.95">
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
                               </Button>
                            </children>
                         </HBox>
@@ -86,11 +120,12 @@
                   </VBox>
                   <VBox alignment="CENTER" fillWidth="false" prefHeight="212.0" prefWidth="854.0">
                      <children>
-                        <TreeTableView fx:id="Table" prefHeight="174.0" prefWidth="706.0" style="-fx-border-color: #000000;">
+                        <TreeTableView fx:id="Table" prefHeight="174.0" prefWidth="781.0" style="-fx-border-color: #000000;">
                           <columns>
                             <TreeTableColumn fx:id="processIDCol" prefWidth="230.0" text="Process ID" />
                             <TreeTableColumn fx:id="ArrivalTimeCol" prefWidth="230.0" text="Arrival Time" />
                               <TreeTableColumn fx:id="BurstTimeCol" prefWidth="230.0" text="Burst Time" />
+                              <TreeTableColumn fx:id="Prioritycol" prefWidth="75.0" text="Priority" />
                           </columns>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -156,7 +191,7 @@
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="869.0">
                                                    <children>
-                                                      <Pane fx:id="myPane" prefHeight="200.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" />
+                                                      <Pane fx:id="myPane" prefHeight="200.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>
@@ -195,43 +230,39 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="222.0" prefWidth="244.0" spacing="17.0">
+                        <VBox alignment="CENTER" fillWidth="false" prefHeight="222.0" prefWidth="244.0" spacing="17.0">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
-                                 <children>
-                                    <VBox alignment="CENTER" prefHeight="115.0" prefWidth="127.0">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="74.0" text="Priority" textFill="WHITE">
-                                             <font>
-                                                <Font size="13.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="priorityTextField" onAction="#ComputeAction" prefHeight="31.0" prefWidth="116.0" promptText="priority" />
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="CENTER" prefHeight="100.0" prefWidth="158.0" spacing="5.0">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="130.0" text="Quantum Time" textFill="WHITE">
-                                             <font>
-                                                <Font size="13.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="QuantumTimeTextField" onAction="#ComputeAction" prefHeight="31.0" prefWidth="116.0" promptText="Quantum Time" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <ButtonBar prefHeight="40.0" prefWidth="136.0">
+                              <ButtonBar prefHeight="42.0" prefWidth="138.0">
                                 <buttons>
-                                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#ComputeAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #3B82EA;" text="Compute" textFill="WHITE">
+                                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#ComputeAction" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #330044;" text="Compute" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="17.0" />
                                        </font>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.35" specularConstant="0.51" specularExponent="27.34" surfaceScale="1.78">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
                                     </Button>
                                 </buttons>
                               </ButtonBar>
-                              <Button fx:id="livebtn" mnemonicParsing="false" onAction="#livee" style="-fx-background-color: #FF0000;" text="Live" textFill="WHITE" />
-                              <Button fx:id="ganttbtn" mnemonicParsing="false" onAction="#btngntt" text="Gantt Chart" />
+                              <Button fx:id="livebtn" mnemonicParsing="false" onAction="#livee" style="-fx-background-color: #FF0000;" text="Live" textFill="WHITE">
+                                 <effect>
+                                    <Lighting diffuseConstant="1.48" specularConstant="0.28" specularExponent="10.09" surfaceScale="2.23">
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect></Button>
+                              <Button fx:id="restartb" mnemonicParsing="false" onAction="#restartbtn" style="-fx-background-color: #0000ff;" text="Restart" textFill="WHITE" />
                            </children>
                         </VBox>
                      </children>
@@ -243,14 +274,17 @@
             </VBox>
          </center>
          <top>
-            <HBox alignment="CENTER" prefHeight="96.0" prefWidth="929.0" style="-fx-background-color: #3B82EA;" BorderPane.alignment="CENTER">
+            <HBox fx:id="myHBox" alignment="CENTER" layoutX="1.0" layoutY="2.0" opacity="0.78" prefHeight="96.0" prefWidth="929.0" style="-fx-background-color: #240032;" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="CPU Scheduler" textFill="WHITE">
+                  <Label alignment="CENTER" text="CPU scheduler" textFill="WHITE">
                      <font>
-                        <Font name="Berlin Sans FB" size="26.0" />
+                        <Font name="Berlin Sans FB" size="40.0" />
                      </font>
                   </Label>
                </children>
+               <effect>
+                  <Glow level="0.38" />
+               </effect>
             </HBox>
          </top>
       </BorderPane>

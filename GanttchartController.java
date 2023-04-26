@@ -37,7 +37,7 @@ public class GanttchartController implements Initializable {
         partitions.add(80);
         partitions.add(100);
         partitions.add(75);
-           partitions.add(5);
+          partitions.add(80);
         ArrayList<Integer> names = new ArrayList<>();
         names.add(0);
         names.add(1);
